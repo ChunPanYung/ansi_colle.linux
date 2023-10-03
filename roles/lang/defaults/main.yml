@@ -1,0 +1,5 @@
+---
+# defaults file for lang
+setup_go: false
+setup_ruby: false
+setup_rust: false

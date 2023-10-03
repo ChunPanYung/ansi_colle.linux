@@ -1,0 +1,25 @@
+---
+# tasks file for systemd_config
+- name: Copy tmpdir configuration file
+  become: true
+  ansible.builtin.copy:
+    src: tmpdirs.conf
+    dest: /etc/tmpfiles.d/
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Configure journal.conf
+  become: true
+  block:
+    - name: Create directory for custom journald settings
+      ansible.builtin.file:
+        name: /etc/systemd/journald.conf.d/
+        state: directory
+        mode: '0755'
+
+    - name: Change systemd journal max size
+      ansible.builtin.copy:
+        src: override.conf
+        dest: /etc/systemd/journald.conf.d/
+        mode: '0644'

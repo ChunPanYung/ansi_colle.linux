@@ -1,0 +1,32 @@
+---
+# pyenv/tasks/
+- name: Check if pyenv directory exist
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user }}/.pyenv"
+  register: st
+
+- name: Install pyenv
+  when: not st.exists
+  vars:
+    tmp_dir: /tmp/Ansible-Tmp
+  block:
+    - name: Create temp directory
+      ansible.builtin.file:
+        path: "{{ tmp_dir }}"
+        mode: '0700'
+        state: directory
+
+    - name: Download pyenv installer
+      ansible.builtin.get_url:
+        url: https://pyenv.run
+        dest: "{{ tmp_dir }}/pyenv-installer.sh"
+        mode: '0700'
+
+    - name: Install pyenv from shell script
+      ansible.builtin.command: /tmp/Ansible-tmp/pyenv-installer.sh
+      changed_when: true
+
+    - name: Remove temp directory
+      ansible.builtin.file:
+        path: "{{ tmp_dir }}"
+        state: absent

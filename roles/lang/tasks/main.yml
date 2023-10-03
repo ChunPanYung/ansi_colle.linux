@@ -1,0 +1,52 @@
+---
+# tasks file for lang
+- name: Create GEM_HOME environment variable
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bash_profile"
+    regexp: '^export GEM_HOME='
+    line: >-
+      export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+  when: setup_ruby
+
+- name: Setup ruby environment variables
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "export PATH"
+    marker: "# {mark} SETUP RUBY PATH"
+    block: |
+      if ! [[ "$PATH" =~ "$GEM_HOME/bin" ]] ; then
+        PATH="$GEM_HOME/bin:$PATH"
+      fi
+  when: setup_ruby
+
+- name: Setup go environment variables
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "export PATH"
+    marker: "# {mark} SETUP GO PATH"
+    block: |
+      export GOPATH="$HOME/.go"
+      if ! [[ "$PATH" =~ "$GOPATH/bin" ]] ; then
+        PATH="$GOPATH/bin:$PATH"
+      fi
+  when: setup_go
+
+- name: Setup and Install Rust
+  when: setup_rust
+  block:
+    - name: Install rust and package manager
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - rust
+          - cargo
+
+    - name: Setup rust environment variables
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_user_dir }}/.bashrc"
+        insertbefore: "export PATH"
+        marker: "# {mark} SETUP RUST PATH"
+        block: |
+          if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]] ; then
+            PATH="$HOME/.cargo/bin:$PATH"
+          fi

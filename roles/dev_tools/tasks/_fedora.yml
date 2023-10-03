@@ -1,0 +1,60 @@
+---
+- name: Execute installation with sudo
+  become: true
+  block:
+    - name: Install utilities
+      ansible.builtin.dnf:
+        name:
+          - ripgrep
+          - fd-find
+          - tmux
+          - git
+
+    - name: Install development tools used by all project
+      ansible.builtin.dnf:
+        name:
+          - pre-commit
+          - poetry
+
+    - name: Install Neovim
+      ansible.builtin.dnf:
+        name:
+          - neovim
+          - python3-neovim
+          - gcc-c++  # Required by nvim-treesitter
+
+    - name: Install shell script tools
+      ansible.builtin.dnf:
+        name:
+          - shellcheck
+          - shfmt
+          - nodejs-bash-language-server
+
+    - name: Install VirtualBox
+      ansible.builtin.dnf:
+        name: VirtualBox
+
+- name: Install packages from repository
+  become: true
+  block:
+    - name: Install dnf-plugins-core, required by community.general.copr
+      ansible.builtin.dnf:
+        name: dnf-plugins-core
+
+    - name: Enable lazygit repository
+      community.general.copr:
+        name: 'atim/lazygit'
+
+    - name: Install utilities
+      ansible.builtin.dnf:
+        name: lazygit
+
+    - name: Install dotnet
+      ansible.builtin.dnf:
+        name: dotnet
+
+- name: Install nodejs packages
+  community.general.npm:
+    name: 'quick-lint-js'
+    unsafe_perm: true
+    global: true

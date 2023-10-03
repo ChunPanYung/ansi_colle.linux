@@ -1,0 +1,49 @@
+---
+# tasks file for pipx
+- name: Install pipx on Debian based system
+  become: true
+  ansible.builtin.apt:
+    name: pipx
+  when: ansible_os_family == 'Debian'
+
+- name: Install python packages on RedHat based system
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - pipx
+      - python3-ipython
+      - poetry
+  when: ansible_os_family == 'RedHat'
+
+- name: Create venv directory for pip virtual environment
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.venv/"
+    mode: '0755'
+    state: directory
+
+- name: Instal pip
+  become: true
+  ansible.builtin.dnf:
+    name: python3-pip
+
+- name: Install pyenv
+  ansible.builtin.include_tasks: _pyenv.yml
+  when: install_pyenv
+
+- name: Install black, python code formatter
+  become: true
+  ansible.builtin.dnf:
+    name: black
+  when: ansible_os_family == 'RedHat'
+
+- name: Install pytest
+  become: true
+  ansible.builtin.dnf:
+    name: python3-pytest
+
+- name: Install ruff and ruff-lsp
+  become: false
+  community.general.pipx:
+    name: "{{ item }}"
+  loop:
+    - ruff-lsp

@@ -1,0 +1,37 @@
+---
+# roles/sys_config/tasks
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      - mcomix
+      - unrar
+      - keepassxc
+
+- name: Install following packages if it is KDE Desktop Envionment
+  ansible.builtin.apt:
+    name:
+      - elisa
+      - transmission-qt
+      - yakuake
+      - kwrite
+  when: lookup('ansible.builtin.env', '$XDG_SESSION_DESKTOP') == "KDE"
+
+- name: Setup KDE Connect
+  block:
+    - name: Install ufw
+      ansible.builtin.apt:
+        name: ufw
+
+    - name: Allow ports used by KDE Connect
+      community.general.ufw:
+        rule: allow
+        port: 1714:1764
+        proto: "{{ item }}"
+      loop:
+        - udp
+        - tcp
+      notify: "sys_config : Reload ufw"
+
+    - name: Install KDE Connect
+      ansible.builtin.apt:
+        name: kdeconnect

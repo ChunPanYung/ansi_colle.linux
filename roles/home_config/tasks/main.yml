@@ -1,0 +1,107 @@
+---
+# linux -> home_config/tasks
+- name: Setup Shell Environment on RedHat Based OS
+  when: ansible_os_family == 'RedHat'
+  block:
+    - name: Create $HOME/.local/state for XDG_STATE_HOME
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.local/state"
+        state: directory
+        mode: '0755'
+
+    - name: Setup bash profile
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_user_dir }}/.bash_profile"
+        block: "{{ lookup('ansible.builtin.file', 'profile.sh') }}"
+        insertafter: "EOF"
+
+    - name: Create bashrc.d directory
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.bashrc.d"
+        state: directory
+        mode: '0755'
+
+    - name: Copy file containing bash aliases
+      ansible.builtin.copy:
+        src: aliases.bash
+        dest: "{{ ansible_user_dir }}/.bashrc.d/"
+        mode: '0644'
+
+- name: Ensure private directory on keys and secrets
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0700'
+  loop:
+    - "{{ ansible_user_dir }}/.ssh"
+    - "{{ ansible_user_dir }}/.gnupg"
+    - "{{ ansible_user_dir }}/.keys"
+
+- name: Create directory for git repo
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/Repos/git/"
+    state: directory
+    mode: '0755'
+
+- name: Create directory for binary, exeuctables, and scripts
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ ansible_user_dir }}/.local/bin/"
+    - "{{ ansible_user_dir }}/.local/opt/"
+    - "{{ ansible_user_dir }}/.local/script/"
+
+- name: Create directory for local systemd
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/systemd/user/"
+    state: directory
+    mode: '0750'
+
+- name: Setup opt PATH
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "^export PATH"
+    marker: "# {mark} SETUP OPT PATH"
+    block: |
+      if ! [[ "$PATH" =~ "$HOME/.local/opt:" ]]
+      then
+        PATH="$HOME/.local/opt:$PATH"
+      fi
+
+- name: Setup script PATH
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "^export PATH"
+    marker: "# {mark} SETUP SCRIPT PATH"
+    block: |
+      if ! [[ "$PATH" =~ "$HOME/.local/script:" ]]
+      then
+        PATH="$HOME/.local/script:$PATH"
+      fi
+
+- name: Customize git configuration
+  block:
+    - name: Create template directory for git
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/Templates/git/"
+        state: directory
+        mode: '0755'
+
+    - name: Default gitconfig file
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_user_dir }}/.gitconfig"
+        block: "{{ lookup('ansible.builtin.file', 'gitconfig') }}"
+
+    - name: Global gitignore file
+      ansible.builtin.copy:
+        src: gitignore
+        dest: "{{ ansible_user_dir }}/.gitignore"
+        mode: '0644'
+
+- name: Personalize bash
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    block: "{{ lookup('ansible.builtin.file', 'bashrc.bash') }}"
+    marker: "# {mark} PERSONALIZE BASH"

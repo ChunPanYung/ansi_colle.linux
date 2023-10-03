@@ -1,0 +1,38 @@
+---
+- name: Install Rust and library
+  block:
+    - name: Install Rust, package manager and format tool
+      become: true
+      ansible.builtin.apt:
+        name:
+          - rustc
+          - cargo
+          - rustfmt
+
+    - name: Install fd and rg from Rust
+      community.general.cargo:
+        name:
+          - fd-find
+          - ripgrep
+
+- name: Setup editor
+  become: false
+  vars:
+    dev_tools_user_dir: "{{ ansible_user_dir }}/.local/bin/"
+    dev_tools_neovim_url: "https://github.com/neovim/neovim"
+  block:
+    - name: Create $HOME/.local/bin/ directory
+      ansible.builtin.file:
+        path: "{{ dev_tools_user_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Download and setup Neovim AppImage
+      ansible.builtin.get_url:
+        url: "{{ dev_tools_neovim_url }}/releases/latest/download/nvim.appimage"
+        dest: "{{ dev_tools_user_dir }}"
+        mode: '0755'
+
+    - name: Install pynvim
+      ansible.builtin.pip:
+        name: pynvim

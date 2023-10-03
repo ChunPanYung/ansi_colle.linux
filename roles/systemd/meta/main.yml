@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Chun Pan Yung
+  description: Configure systemd.
+  license: GPL-2.0-or-later
+
+  min_ansible_version: "2.11"
+
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+
+  galaxy_tags: []
+
+dependencies: []

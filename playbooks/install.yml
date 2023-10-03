@@ -1,0 +1,25 @@
+---
+- name: Install collections and roles
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Install community collections
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: "{{ item }}"
+      loop:
+        - community.general
+        - containers.podman
+
+    - name: Install custom collections
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: "{{ item }}"
+      loop:
+        - "{{ url['ansi_colle'] }},{{ git['ansi_colle'] }}"
+        - "{{ url['slim_os'] }},{{ git['slim_os'] }}"
+
+    - name: Install custom role
+      community.general.ansible_galaxy_install:
+        type: role
+        name: "{{ url['comm_config'] }},{{ git['comm_config'] }}"
