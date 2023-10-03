@@ -1,0 +1,29 @@
+---
+- name: Execute tasks with sudo
+  become: true
+  block:
+    - name: Install frequent used packages
+      ansible.builtin.dnf:
+        name:
+          - keepassxc
+          - nextcloud-client
+          - transmission
+          - qownnotes
+          - trash-cli
+
+    - name: Remove Kwrite
+      ansible.builtin.dnf:
+        name: kwrite
+        state: absent
+
+    - name: Install followings if it is KDE
+      ansible.builtin.dnf:
+        name:
+          - kate
+          - yakuake
+      when: ansible_env.XDG_CURRENT_DESKTOP == 'KDE'
+
+    - name: Install Android File Transfer
+      ansible.builtin.dnf:
+        name:
+          - android-file-transfer

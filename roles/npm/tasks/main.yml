@@ -1,0 +1,47 @@
+---
+- name: Install node on Debian system
+  become: true
+  ansible.builtin.apt:
+    name: nodejs
+  when: ansible_os_family == 'Debian'
+
+- name: Install nodejs on RedHat system
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - nodejs
+      - npm
+  when: ansible_os_family == 'RedHat'
+
+- name: Create npm configuration file, do not change times to make it idempotent
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.npmrc"
+    mode: '0644'
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+
+- name: Setup global package directory for npm
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.npmrc"
+    regexp: '^prefix='
+    line: "prefix={{ ansible_user_dir }}/.npm-global"
+
+- name: Setup PATH for npm
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "^export PATH"
+    marker: "# {mark} SETUP NPM PATH"
+    block: |
+      if ! [[ "$PATH" =~ "$HOME/.npm-global/bin:" ]]
+      then
+        PATH="$HOME/.npm-global/bin:$PATH"
+      fi
+
+- name: Install nodejs packages
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - neovim
+    - tree-sitter-cli

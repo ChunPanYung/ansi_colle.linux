@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Chun Pan Yung
+  description: Install powershell and append it to $PATH
+  license: MIT
+
+  min_ansible_version: "core 2.15"
+
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+
+  galaxy_tags: []
+
+dependencies: []

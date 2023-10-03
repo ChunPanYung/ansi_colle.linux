@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Chun Pan Yung
+  description: Change configuration settings in user home directory.
+  license: GPL-2.0-or-later
+
+  min_ansible_version: "2.11"
+
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags: []
+dependencies:
+  - role: ansi_colle.linux.npm

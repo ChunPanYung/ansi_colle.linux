@@ -1,0 +1,73 @@
+---
+# roles/flatpak/tasks
+- name: Install flatpak & discover flatpak backend
+  become: true
+  ansible.builtin.apt:
+    name:
+      - flatpak
+      - plasma-discover-backend-flatpak
+  when: ansible_os_family == 'Debian'
+
+- name: Add flathub flatpak repository remote to the user installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+- name: Install Gtk3theme Adwaita-dark
+  become: false
+  community.general.flatpak:
+    name: org.gtk.Gtk3theme.Adwaita-dark
+  register: _output
+  changed_when: "'Skipping: ' not in _output.stderr"  # No idempotent on Ansible
+
+- name: Install flatpak package
+  become: false
+  community.general.flatpak:
+    name:
+      - com.github.tchx84.Flatseal
+      - net.sourceforge.mcomix
+      - com.ticktick.TickTick
+      - com.microsoft.Edge
+      - com.jgraph.drawio.desktop
+
+- name: Install different firefox package
+  block:
+    - name: Remove native firefox package
+      become: true
+      ansible.builtin.package:
+        name: firefox
+        state: absent
+
+    - name: Install flatpak package
+      become: false
+      community.general.flatpak:
+        name: org.mozilla.firefox
+
+- name: Create flatpak data directory
+  ansible.builtin.file:
+    name: "{{ ansible_user_dir }}/.local/share/flatpak/overrides"
+    state: directory
+    mode: '0755'
+
+- name: Setup flatpak app configuration
+  vars:
+    config_dir: "{{ ansible_user_dir }}/.local/share/flatpak/overrides"
+  block:
+    - name: Setup dark mode on all GTK flatpak app
+      community.general.ini_file:
+        path: "{{ config_dir }}/global"
+        section: Environment
+        option: GTK_THEME
+        value: Adwaita-dark
+        mode: '0644'
+        no_extra_spaces: true
+
+    - name: Setup configuration for mcomix
+      community.general.ini_file:
+        path: "{{ config_dir }}/net.sourceforge.mcomix"
+        section: Context
+        option: filesystems
+        value: home
+        mode: '0644'
+        no_extra_spaces: true

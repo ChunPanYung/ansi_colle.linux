@@ -1,0 +1,22 @@
+---
+# tasks file for kopia
+- name: Import kopa repository
+  become: true
+  block:
+    - name: Import kopia key to rpm
+      ansible.builtin.rpm_key:
+        key: https://kopia.io/signing-key
+
+    - name: Install kopia repository
+      ansible.builtin.yum_repository:
+        name: kopia
+        description: Kopia
+        baseurl: http://packages.kopia.io/rpm/stable/$basearch/
+        gpgcheck: true
+        enabled: true
+        gpgkey: https://kopia.io/signing-key
+
+- name: Install kopia cli
+  become: true
+  ansible.builtin.dnf:
+    name: kopia

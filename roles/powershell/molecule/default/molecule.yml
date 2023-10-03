@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: podman
+platforms:
+  - name: instance
+    image: quay.io/fedora/fedora:latest
+    pre_build_image: true
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      centos:
+        ansible_user: ansible
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+      force_color: true
+      verbosity: 1
+      stdout_callback: yaml
+      bin_ansible_callbacks: true
+      remote_tmp: /tmp
+verifier:
+  name: ansible
