@@ -58,9 +58,3 @@
         name:
           - buildah
           - podman
-
-- name: Install nodejs packages
-  community.general.npm:
-    name: 'quick-lint-js'
-    unsafe_perm: true
-    global: true
