@@ -64,4 +64,3 @@
     name: 'quick-lint-js'
     unsafe_perm: true
     global: true
-
