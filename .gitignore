@@ -1,13 +1,13 @@
-.self/
+.keys/
 TODO.md
 
 # ansible
 .directory
 .plugin-cache.yaml
-.self
 
 hosts
-env-vars.yml
+hosts.ini
+hosts.yml
 
 # antsibull-changelog
 .plugin-cache.yaml

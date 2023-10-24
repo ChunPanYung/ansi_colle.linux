@@ -41,9 +41,12 @@
   ansible.builtin.dnf:
     name: python3-pytest
 
-- name: Install ruff and ruff-lsp
+- name: Install ruff-lsp
   become: false
   community.general.pipx:
-    name: "{{ item }}"
-  loop:
-    - ruff-lsp
+    name: ruff-lsp
+
+- name: Install git-cliff
+  become: false
+  community.general.pipx:
+    name: git-cliff
