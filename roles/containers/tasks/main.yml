@@ -1,0 +1,41 @@
+---
+# tasks file for containers
+- name: Install container tools
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - buildah
+      - podman
+  when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Prepare and install kubectl and minikube
+  become: true
+  block:
+
+    - name: Create tempoary directory
+      ansible.builtin.tempfile:
+        state: directory
+      register: tmpdir
+
+    - name: Make sure /bin directory exists
+      ansible.builtin.file:
+        path: /usr/local/bin
+        state: directory
+        mode: '0755'
+
+    - name: Get the latest kubectl
+      ansible.builtin.uri:
+        url: https://dl.k8s.io/release/stable.txt
+      register: kubectl_version
+
+    - name: Download binary for kubectl
+      ansible.builtin.get_url:
+        url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
+        dest: "{{ tmpdir.path }}"
+        mode: '0750'
+
+    - name: Copy to /bin directory
+      ansible.builtin.copy:
+        src: "{{ tmpdir.path }}/kubectl"
+        dest: "/usr/local/bin/"
+        mode: '0755'
