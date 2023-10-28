@@ -26,11 +26,12 @@
     - name: Get the latest kubectl
       ansible.builtin.uri:
         url: https://dl.k8s.io/release/stable.txt
-      register: kubectl_version
+        return_content: true
+      register: this
 
     - name: Download binary for kubectl
       ansible.builtin.get_url:
-        url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
+        url: "https://dl.k8s.io/release/{{ this.content }}/bin/linux/amd64/kubectl"
         dest: "{{ tmpdir.path }}"
         mode: '0750'
 
@@ -38,4 +39,11 @@
       ansible.builtin.copy:
         src: "{{ tmpdir.path }}/kubectl"
         dest: "/usr/local/bin/"
+        remote_src: true
         mode: '0755'
+
+    - name: Remove temp directory
+      ansible.builtin.file:
+        path: "{{ tmpdir.path }}"
+        state: absent
+      when: tmpdir.path is defined
