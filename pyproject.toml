@@ -16,7 +16,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
-python = ">=3.11"
+python = ">=3.11, <3.12"
 pip = ">=23.1.2"
 ansible = ">=8.0.0"
 
