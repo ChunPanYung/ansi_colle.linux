@@ -1,0 +1,54 @@
+---
+# tasks file for containers
+- name: Install container tools
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - buildah
+      - podman
+  when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Create tempoary directory
+  ansible.builtin.tempfile:
+    state: directory
+  register: tmpdir
+
+- name: Prepare and install kubectl and minikube
+  become: true
+  block:
+    - name: Make sure /bin directory exists
+      ansible.builtin.file:
+        path: /usr/local/bin
+        state: directory
+        mode: '0755'
+
+    - name: Get the latest kubectl
+      ansible.builtin.uri:
+        url: https://dl.k8s.io/release/stable.txt
+        return_content: true
+      register: this
+
+    - name: Download binary for kubectl
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: "{{ tmpdir.path }}"
+        mode: '0750'
+      loop:
+        - "https://dl.k8s.io/release/{{ this.content }}/bin/linux/amd64/kubectl"
+        - "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
+
+    - name: Copy to /bin directory
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: true
+        mode: '0755'
+      loop:
+        - { src: "{{ tmpdir.path }}/kubectl", dest: "/usr/local/bin/" }
+        - { src: "{{ tmpdir.path }}/minikube-linux-amd64", dest: "/usr/local/bin/minikube" }
+
+- name: Remove temp directory
+  ansible.builtin.file:
+    path: "{{ tmpdir.path }}"
+    state: absent
+  when: tmpdir.path is defined

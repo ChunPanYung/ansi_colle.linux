@@ -52,9 +52,3 @@
     - name: Install dotnet
       ansible.builtin.dnf:
         name: dotnet
-
-    - name: Install container tools
-      ansible.builtin.dnf:
-        name:
-          - buildah
-          - podman
