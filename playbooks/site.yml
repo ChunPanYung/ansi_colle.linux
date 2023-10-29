@@ -38,3 +38,5 @@
       tags: onlyoffice
     - role: ansi_colle.linux.powershell
       tags: powershell
+    - role: ansi_colle.linux.containers
+      tags: containers
