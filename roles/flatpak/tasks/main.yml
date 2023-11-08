@@ -72,9 +72,9 @@
         mode: '0644'
         no_extra_spaces: true
 
-    - name: Setup configuration for mcomix
+    - name: Setup configuration for firefox
       community.general.ini_file:
-        path: "{{ config_dir }}/net.sourceforge.mcomix"
+        path: "{{ config_dir }}/org.mozilla.firefox"
         section: Context
         option: filesystems
         value: /tmp/RAM
