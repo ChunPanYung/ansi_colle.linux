@@ -71,3 +71,12 @@
         value: home
         mode: '0644'
         no_extra_spaces: true
+
+    - name: Setup configuration for mcomix
+      community.general.ini_file:
+        path: "{{ config_dir }}/net.sourceforge.mcomix"
+        section: Context
+        option: filesystems
+        value: /tmp/RAM
+        mode: '0644'
+        no_extra_spaces: true
