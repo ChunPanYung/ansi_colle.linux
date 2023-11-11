@@ -1,2 +1,2 @@
 ---
-install_pyenv: false
+python_install_pyenv: false

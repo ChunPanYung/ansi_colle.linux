@@ -1,5 +1,5 @@
 ---
 # defaults file for lang
-setup_go: false
-setup_ruby: false
-setup_rust: false
+lang_setup_go: false
+lang_setup_ruby: false
+lang_setup_rust: false
