@@ -6,12 +6,8 @@
     return_content: true
   register: powershell_api
 
-- name: DEBUG
-  ansible.builtin.debug:
-    var: powershell_api.json.tag_name
-
 - name: Execute the following if version is not the latest
-  when: powershell_api.json.tag_name[1:] is version('8.0.0', '>')
+  # when: powershell_api.json.tag_name[1:] is version('8.0.0', '>')
   block:
     - name: Create temporary directory
       ansible.builtin.tempfile:
