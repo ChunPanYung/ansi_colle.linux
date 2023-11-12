@@ -28,7 +28,7 @@
 
 - name: Install pyenv
   ansible.builtin.include_tasks: _pyenv.yml
-  when: install_pyenv
+  when: python_install_pyenv
 
 - name: Install black, python code formatter
   become: true

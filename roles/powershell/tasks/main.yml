@@ -6,37 +6,68 @@
     return_content: true
   register: powershell_api
 
-- name: Create temporary directory
-  ansible.builtin.tempfile:
-    state: directory
-  register: powershell_tempdir
+- name: Get the current powershell version
+  ansible.builtin.command:
+    cmd: pwsh -Version
+  register: powershell_version
+  changed_when: false
 
-- name: Download executables for linux x64 system
-  ansible.builtin.get_url:
-    url: "{{ powershell_api.json.assets[7].browser_download_url }}"
-    dest: "{{ powershell_tempdir.path }}/powershell.tgz"
-    mode: '0644'
+- name: Execute the following if version is not the latest
+  vars:
+    current_version: "{{ powershell_version.stdout | split | last }}"
+  when: powershell_api.json.tag_name[1:] is version(current_version, '>')
+  block:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+      register: powershell_tempdir
 
-- name: Create directory in /opt/
-  become: true
-  ansible.builtin.file:
-    path: /opt/powershell
-    state: directory
-    mode: '0755'
+    - name: Download executables for linux x64 system
+      ansible.builtin.get_url:
+        url: "{{ powershell_api.json.assets[8].browser_download_url }}"
+        dest: "{{ powershell_tempdir.path }}/powershell.tgz"
+        mode: '0644'
 
-- name: Extract file to /opt directory
-  become: true
-  ansible.builtin.unarchive:
-    src: "{{ powershell_tempdir.path }}/powershell.tgz"
-    dest: /opt/powershell
-    remote_src: true
+    - name: Create directory in /opt/
+      become: true
+      ansible.builtin.file:
+        path: /opt/powershell
+        state: directory
+        mode: '0755'
 
-- name: Create symbolic links
-  become: true
-  ansible.builtin.file:
-    src: /opt/powershell/pwsh
-    path: /usr/local/bin/pwsh
-    owner: root
-    group: root
-    state: link
-    mode: '0755'
+    - name: Extract file to /opt directory
+      become: true
+      ansible.builtin.unarchive:
+        src: "{{ powershell_tempdir.path }}/powershell.tgz"
+        dest: /opt/powershell
+        remote_src: true
+
+    - name: Create symbolic links
+      become: true
+      ansible.builtin.file:
+        src: /opt/powershell/pwsh
+        path: /usr/local/bin/pwsh
+        owner: root
+        group: root
+        state: link
+        mode: '0755'
+
+- name: Setup config and data directory for powershell
+  vars:
+    xdg_config_home: "{{ ansible_user_dir }}/.config"
+    xdg_data_home: "{{ ansible_user_dir }}/.local/share"
+  block:
+    - name: Create directory on user HOME directory
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ xdg_data_home }}/powershell/Modules/"
+        - "{{ xdg_config_home }}/powershell/"
+
+    - name: Copy profile to location
+      ansible.builtin.copy:
+        src: profile.ps1
+        dest: "{{ xdg_config_home }}/powershell/Microsoft.PowerShell_profile.ps1"
+        mode: '0644'

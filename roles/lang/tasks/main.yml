@@ -6,7 +6,7 @@
     regexp: '^export GEM_HOME='
     line: >-
       export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-  when: setup_ruby
+  when: lang_setup_ruby
 
 - name: Setup ruby environment variables
   ansible.builtin.blockinfile:
@@ -17,7 +17,7 @@
       if ! [[ "$PATH" =~ "$GEM_HOME/bin" ]] ; then
         PATH="$GEM_HOME/bin:$PATH"
       fi
-  when: setup_ruby
+  when: lang_setup_ruby
 
 - name: Setup go environment variables
   ansible.builtin.blockinfile:
@@ -29,10 +29,10 @@
       if ! [[ "$PATH" =~ "$GOPATH/bin" ]] ; then
         PATH="$GOPATH/bin:$PATH"
       fi
-  when: setup_go
+  when: lang_setup_go
 
 - name: Setup and Install Rust
-  when: setup_rust
+  when: lang_setup_rust
   block:
     - name: Install rust and package manager
       become: true
