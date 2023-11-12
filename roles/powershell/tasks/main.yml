@@ -6,40 +6,43 @@
     return_content: true
   register: powershell_api
 
-- name: Create temporary directory
-  ansible.builtin.tempfile:
-    state: directory
-  register: powershell_tempdir
+- name: Execute the following if version is not the latest
+  when: powershell_api.json.tag_name is version('8.0.0', '>')
+  block:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+      register: powershell_tempdir
 
-- name: Download executables for linux x64 system
-  ansible.builtin.get_url:
-    url: "{{ powershell_api.json.assets[7].browser_download_url }}"
-    dest: "{{ powershell_tempdir.path }}/powershell.tgz"
-    mode: '0644'
+    - name: Download executables for linux x64 system
+      ansible.builtin.get_url:
+        url: "{{ powershell_api.json.assets[8].browser_download_url }}"
+        dest: "{{ powershell_tempdir.path }}/powershell.tgz"
+        mode: '0644'
 
-- name: Create directory in /opt/
-  become: true
-  ansible.builtin.file:
-    path: /opt/powershell
-    state: directory
-    mode: '0755'
+    - name: Create directory in /opt/
+      become: true
+      ansible.builtin.file:
+        path: /opt/powershell
+        state: directory
+        mode: '0755'
 
-- name: Extract file to /opt directory
-  become: true
-  ansible.builtin.unarchive:
-    src: "{{ powershell_tempdir.path }}/powershell.tgz"
-    dest: /opt/powershell
-    remote_src: true
+    - name: Extract file to /opt directory
+      become: true
+      ansible.builtin.unarchive:
+        src: "{{ powershell_tempdir.path }}/powershell.tgz"
+        dest: /opt/powershell
+        remote_src: true
 
-- name: Create symbolic links
-  become: true
-  ansible.builtin.file:
-    src: /opt/powershell/pwsh
-    path: /usr/local/bin/pwsh
-    owner: root
-    group: root
-    state: link
-    mode: '0755'
+    - name: Create symbolic links
+      become: true
+      ansible.builtin.file:
+        src: /opt/powershell/pwsh
+        path: /usr/local/bin/pwsh
+        owner: root
+        group: root
+        state: link
+        mode: '0755'
 
 - name: Setup config and data directory for powershell
   vars:
