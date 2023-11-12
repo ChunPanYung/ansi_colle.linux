@@ -14,7 +14,7 @@
 
 - name: Execute the following if version is not the latest
   vars:
-    current_version: "{{ powershell_version | split | last }}"
+    current_version: "{{ powershell_version.stdout | split | last }}"
   when: powershell_api.json.tag_name[1:] is version(current_version, '>')
   block:
     - name: Create temporary directory
