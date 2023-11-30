@@ -49,6 +49,8 @@
       ansible.builtin.dnf:
         name: lazygit
 
-    - name: Install dotnet
+    - name: Install frameworks and languages
       ansible.builtin.dnf:
-        name: dotnet
+        name:
+          - dotnet
+          - java-latest-openjdk
