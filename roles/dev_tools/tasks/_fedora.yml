@@ -53,4 +53,3 @@
       ansible.builtin.dnf:
         name:
           - dotnet
-          - java-latest-openjdk
