@@ -10,7 +10,6 @@
   become: true
   ansible.builtin.dnf:
     name:
-      - pipx
       - python3-ipython
       - poetry
   when: ansible_os_family == 'RedHat'
