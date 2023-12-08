@@ -1,6 +1,0 @@
----
-major_changes:
-  - Role for installing powershell.
-  - Test powershell role with molecule.
-  - Specify to install poetry on OS.
-  - Add testinfra to verify infrastructure.
