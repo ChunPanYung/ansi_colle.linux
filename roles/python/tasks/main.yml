@@ -26,10 +26,6 @@
   ansible.builtin.dnf:
     name: python3-pip
 
-- name: Install pyenv
-  ansible.builtin.include_tasks: _pyenv.yml
-  when: python_install_pyenv
-
 - name: Install black, python code formatter
   become: true
   ansible.builtin.dnf:
