@@ -10,7 +10,6 @@
   become: true
   ansible.builtin.dnf:
     name:
-      - pipx
       - python3-ipython
       - poetry
   when: ansible_os_family == 'RedHat'
@@ -26,9 +25,10 @@
   ansible.builtin.dnf:
     name: python3-pip
 
-- name: Install pyenv
-  ansible.builtin.include_tasks: _pyenv.yml
-  when: python_install_pyenv
+- name: Install pipx via pip
+  ansible.builtin.pip:
+    name: pipx
+    extra_args: --user --upgrade
 
 - name: Install black, python code formatter
   become: true
