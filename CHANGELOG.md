@@ -2,11 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.0.0] - 2023-12-11
 
 ### Bug Fixes
 
 - Output version '0.0.0' if no pwsh is installed. (#6)
+
+### Documentation
+
+- Change to git message changelog.
+- [**breaking**] Replace `antsibull-changelog` with `git-cliff`.
 
 ### Features
 
