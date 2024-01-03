@@ -41,5 +41,5 @@
 
     - name: Remove temporary data
       ansible.builtin.file:
-        path: "{{ kkuro_tempdir.path }}"
+        path: "{{ kuro_tempdir.path }}"
         state: absent
