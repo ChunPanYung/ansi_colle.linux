@@ -38,3 +38,8 @@
       ansible.builtin.dnf:
         name: "{{ kuro_tempdir.path }}/kuro.rpm"
         disable_gpg_check: true
+
+    - name: Remove temporary data
+      ansible.builtin.file:
+      path: "{{ kkuro_tempdir.path }}"
+      state: absent
