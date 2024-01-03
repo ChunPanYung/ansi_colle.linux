@@ -10,7 +10,7 @@
   vars:
     kuro_regexp: '(^neovim\.\w+)(\s+)([0-9]+\.[0-9]+\.[0-9]+)'
   ansible.builtin.command:
-    cmd: "dnf list installed | grep --only-matching --extended-regexp '{{ kuro_regexp }}'"
+    cmd: "dnf list --installed | grep --only-matching --extended-regexp '{{ kuro_regexp }}'"
   register: kuro_version
   changed_when: false
 
