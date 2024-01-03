@@ -15,6 +15,7 @@
       dnf list --installed | \
       grep --only-matching --extended-regexp '{{ kuro_regexp }}'
   register: kuro_version
+  failed_when: false
   changed_when: false
 
 - name: Execute the following if version is not the latest
