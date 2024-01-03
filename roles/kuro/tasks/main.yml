@@ -21,9 +21,8 @@
 - name: Execute the following if version is not the latest
   vars:
     current_version: "{{ kuro_version.stdout.split()[-1] }}"
-  when:
-    - current_version is defined
-    - kuro_api.json.tag_name[1:] is version(current_version, '>')
+  when: current_version is not defined or
+        kuro_api.json.tag_name[1:] is version(current_version, '>')
   block:
     - name: Create temporary directory
       ansible.builtin.tempfile:
