@@ -8,7 +8,7 @@
 
 - name: Get the current kuro version
   vars:
-    kuro_regexp: '(^neovim\.\w+)(\s+)([0-9]+\.[0-9]+\.[0-9]+)'
+    kuro_regexp: '(^kuro\.\w+)(\s+)([0-9]+\.[0-9]+\.[0-9]+)'
   ansible.builtin.shell: |
       set -o pipefail
 
