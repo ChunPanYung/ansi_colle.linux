@@ -1,0 +1,47 @@
+---
+# tasks file for kuro
+- name: Retrieve information from github api
+  ansible.builtin.uri:
+    url: "{{ kuro_github_api }}"
+    return_content: true
+  register: kuro_api
+
+- name: Get the current kuro version
+  vars:
+    kuro_regexp: '(^kuro\.\w+)(\s+)([0-9]+\.[0-9]+\.[0-9]+)'
+  ansible.builtin.shell: |
+      set -o pipefail
+
+      dnf list --installed | \
+      grep --only-matching --extended-regexp '{{ kuro_regexp }}'
+  register: kuro_version
+  failed_when: false
+  changed_when: false
+
+- name: Execute the following if version is not the latest
+  vars:
+    current_version: "{{ kuro_version.stdout.split()[-1] }}"
+  when: current_version is not defined or
+        kuro_api.json.tag_name[1:] is version(current_version, '>')
+  block:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+      register: kuro_tempdir
+
+    - name: Download kuro rpm package
+      ansible.builtin.get_url:
+        url: "{{ kuro_api.json.assets[2].browser_download_url }}"
+        dest: "{{ kuro_tempdir.path }}/kuro.rpm"
+        mode: '0644'
+
+    - name: Install kuro rpm package
+      become: true
+      ansible.builtin.dnf:
+        name: "{{ kuro_tempdir.path }}/kuro.rpm"
+        disable_gpg_check: true
+
+    - name: Remove temporary data
+      ansible.builtin.file:
+        path: "{{ kuro_tempdir.path }}"
+        state: absent

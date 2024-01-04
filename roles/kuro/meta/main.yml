@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Chun Pan Yung
+  description: Install kuro (Microsoft ToDo for Linux) via Github and rpm.
+  license: MIT
+
+  min_ansible_version: "2.15"
+
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+
+  galaxy_tags:
+    - install
+
+dependencies: []

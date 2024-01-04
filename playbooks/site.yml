@@ -40,3 +40,5 @@
       tags: powershell
     - role: ansi_colle.linux.containers
       tags: containers
+    - role: ansi_colle.linux.kuro
+      tags: kuro
