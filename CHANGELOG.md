@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Features
+
+- New role for installing kuro.
+- Add kuro role to playbook.
+
 ## [1.0.0] - 2023-12-11
 
 ### Bug Fixes
