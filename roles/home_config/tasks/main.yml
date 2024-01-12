@@ -83,12 +83,6 @@
 
 - name: Customize git configuration
   block:
-    - name: Create template directory for git
-      ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/Templates/git/"
-        state: directory
-        mode: '0755'
-
     - name: Default gitconfig file
       ansible.builtin.blockinfile:
         path: "{{ ansible_user_dir }}/.gitconfig"
