@@ -42,3 +42,16 @@
       tags: containers
     - role: ansi_colle.linux.kuro
       tags: kuro
+...
+---
+- name: Execute on localhost (WSL)
+  hosts: wsl
+  vars_prompt:
+    - name: ansible_become_pass
+      prompt: "BECOME password"
+
+  roles:
+    - role: ansi_colle.linux.home_config
+      tags: home_config
+    - role: ansi_colle.linux.python
+      tags: python
