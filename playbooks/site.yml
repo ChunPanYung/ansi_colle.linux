@@ -42,8 +42,7 @@
       tags: containers
     - role: ansi_colle.linux.kuro
       tags: kuro
-...
----
+
 - name: Execute on localhost (WSL)
   hosts: wsl
   vars_prompt:
