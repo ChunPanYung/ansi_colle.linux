@@ -5,8 +5,6 @@
     - name: Install utilities
       ansible.builtin.dnf:
         name:
-          - ripgrep
-          - fd-find
           - tmux
           - git
 

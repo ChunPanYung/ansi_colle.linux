@@ -9,12 +9,6 @@
           - cargo
           - rustfmt
 
-    - name: Install fd and rg from Rust
-      community.general.cargo:
-        name:
-          - fd-find
-          - ripgrep
-
 - name: Setup editor
   become: false
   vars:
