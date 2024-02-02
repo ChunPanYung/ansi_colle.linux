@@ -16,8 +16,9 @@
 - name: Install developmental tools
   become: false
   community.general.pipx:
-    name:
-      - git-cliff
-      - ruff-lsp
-      - black
-      - pytest
+    name: "{{ item }}"
+  loop:
+    - git-cliff
+    - ruff-lsp
+    - black
+    - pytest
