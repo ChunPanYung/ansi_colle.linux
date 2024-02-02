@@ -1,0 +1,35 @@
+---
+- name: Setup editor
+  become: false
+  vars:
+    dev_tools_user_dir: "{{ ansible_user_dir }}/.local/bin/"
+    dev_tools_neovim_url: "https://github.com/neovim/neovim"
+  block:
+    - name: Create $HOME/.local/bin/ directory
+      ansible.builtin.file:
+        path: "{{ dev_tools_user_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Download and setup Neovim AppImage
+      ansible.builtin.get_url:
+        url: "{{ dev_tools_neovim_url }}/releases/latest/download/nvim.appimage"
+        dest: "{{ dev_tools_user_dir }}"
+        mode: '0755'
+
+    - name: Install pynvim
+      ansible.builtin.pip:
+        name: pynvim
+
+- name: Install Neovim
+  ansible.builtin.package:
+    name:
+      - python3-neovim
+
+- name: Install neovim packages
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - neovim
+    - tree-sitter-cli

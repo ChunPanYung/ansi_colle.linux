@@ -52,14 +52,6 @@
         PATH="$HOME/.npm-global/bin:$PATH"
       fi
 
-- name: Install neovim packages
-  community.general.npm:
-    name: "{{ item }}"
-    global: true
-  loop:
-    - neovim
-    - tree-sitter-cli
-
 - name: Install web development packages
   community.general.npm:
     name: "{{ item }}"
