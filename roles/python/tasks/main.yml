@@ -11,7 +11,6 @@
           - pipx
           - python3-ipython
 
-
 - name: Setup python on RedHat based system
   become: true
   when: ansible_os_family == 'RedHat'
@@ -40,11 +39,6 @@
     path: "{{ ansible_user_dir }}/.venv/"
     mode: '0755'
     state: directory
-
-- name: Install pipx via pip
-  ansible.builtin.pip:
-    name: pipx
-    extra_args: --user --upgrade
 
 - name: Install ruff-lsp
   become: false
