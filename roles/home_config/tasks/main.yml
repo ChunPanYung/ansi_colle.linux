@@ -58,6 +58,6 @@
     marker: "# {mark} PERSONALIZE BASH"
 
 - name: Execute tasks specific to RedHat based OS
-  ansible.buildtin.include_tasks:
+  ansible.builtin.include_tasks:
     file: _redhat.yml
   when: ansible_os_family == 'RedHat'
