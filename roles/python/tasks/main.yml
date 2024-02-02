@@ -1,38 +1,11 @@
 ---
 # tasks file for pipx
-- name: Setup python on RedHat based system
-  become: true
-  when: ansible_os_family == 'Debian'
-  block:
-    - name: Install pipx
-      ansible.builtin.apt:
-        name:
-          - python3-pip
-          - pipx
-          - python3-ipython
-
-- name: Setup python on RedHat based system
-  become: true
-  when: ansible_os_family == 'RedHat'
-  block:
-    - name: Install python packages on RedHat based system
-      ansible.builtin.dnf:
-        name:
-          - python3-ipython
-          - poetry
-
-    - name: Instal pip
-      ansible.builtin.dnf:
-        name: python3-pip
-
-    - name: Install black, python code formatter
-      ansible.builtin.dnf:
-        name: black
-      when: ansible_os_family == 'RedHat'
-
-    - name: Install pytest
-      ansible.builtin.dnf:
-        name: python3-pytest
+- name: Install python and related packages
+  ansible.builtin.package:
+    name:
+      - python3-pip
+      - pipx
+      - python3-ipython
 
 - name: Create venv directory for pip virtual environment
   ansible.builtin.file:
@@ -40,12 +13,11 @@
     mode: '0755'
     state: directory
 
-- name: Install ruff-lsp
+- name: Install developmental tools
   become: false
   community.general.pipx:
-    name: ruff-lsp
-
-- name: Install git-cliff
-  become: false
-  community.general.pipx:
-    name: git-cliff
+    name:
+      - git-cliff
+      - ruff-lsp
+      - black
+      - pytest
