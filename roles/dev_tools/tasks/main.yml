@@ -7,6 +7,12 @@
       - fd-find
       - ripgrep
 
+- name: Install shell script tools
+  ansible.builtin.package:
+    name:
+      - shellcheck
+      - shfmt
+
 - name: Import tasks if it is Debian based system
   ansible.builtin.import_tasks: _debian.yml
   when: ansible_os_family == 'Debian'

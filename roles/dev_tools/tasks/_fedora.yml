@@ -23,8 +23,6 @@
     - name: Install shell script tools
       ansible.builtin.dnf:
         name:
-          - shellcheck
-          - shfmt
           - nodejs-bash-language-server
 
     - name: Install VirtualBox
