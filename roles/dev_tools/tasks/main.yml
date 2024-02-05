@@ -13,6 +13,10 @@
       - shellcheck
       - shfmt
 
+- name: Install web development packages
+  community.general.npm:
+    name: bash-language-server
+
 - name: Import tasks if it is Debian based system
   ansible.builtin.import_tasks: _debian.yml
   when: ansible_os_family == 'Debian'

@@ -20,11 +20,6 @@
           - python3-neovim
           - gcc-c++  # Required by nvim-treesitter
 
-    - name: Install shell script tools
-      ansible.builtin.dnf:
-        name:
-          - nodejs-bash-language-server
-
     - name: Install VirtualBox
       ansible.builtin.dnf:
         name: VirtualBox
