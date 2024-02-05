@@ -14,5 +14,3 @@
 	rebase = true
 [color]
 	ui = true
-[merge]
-	tool = nvim
