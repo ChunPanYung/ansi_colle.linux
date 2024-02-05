@@ -50,3 +50,5 @@
       tags: home_config
     - role: ansi_colle.linux.python
       tags: python
+    - role: ansi_colle.linux.dev_tools
+      tags: dev_tools
