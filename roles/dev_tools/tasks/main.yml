@@ -1,13 +1,14 @@
 ---
 # linux -> dev_tools/tasks/
 - name: Install utilities
+  become: true
   ansible.builtin.package:
     name:
       - fd-find
       - ripgrep
 
 - name: Import tasks if it is Debian based system
-  ansible.builtin.import_tasks: _ubuntu.yml
+  ansible.builtin.import_tasks: _debian.yml
   when: ansible_os_family == 'Debian'
 
 - name: Import tasks if it is RedHat based system
