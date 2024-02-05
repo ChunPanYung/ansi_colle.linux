@@ -1,19 +1,10 @@
 ---
-- name: Install node on Debian system
+- name: Install nodejs and npm
   become: true
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name:
       - nodejs
       - npm
-  when: ansible_os_family == 'Debian'
-
-- name: Install nodejs on RedHat system
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - nodejs
-      - npm
-  when: ansible_os_family == 'RedHat'
 
 - name: Create npm configuration file, do not change times to make it idempotent
   ansible.builtin.file:
