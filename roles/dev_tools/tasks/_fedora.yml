@@ -11,7 +11,6 @@
     - name: Install development tools used by all project
       ansible.builtin.dnf:
         name:
-          - pre-commit
           - poetry
 
     - name: Install Neovim

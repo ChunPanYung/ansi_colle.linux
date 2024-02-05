@@ -22,3 +22,4 @@
     - ruff-lsp
     - black
     - pytest
+    - pre-commit
