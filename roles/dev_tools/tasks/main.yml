@@ -8,6 +8,7 @@
       - ripgrep
 
 - name: Install shell script tools
+  become: true
   ansible.builtin.package:
     name:
       - shellcheck
