@@ -52,3 +52,5 @@
       tags: python
     - role: ansi_colle.linux.dev_tools
       tags: dev_tools
+    - role: ansi_colle.linux.wsl
+      tags: wsl
