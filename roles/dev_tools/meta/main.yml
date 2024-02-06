@@ -16,6 +16,5 @@ galaxy_info:
 
   galaxy_tags: []
 dependencies:
-  - role: ansi_colle.slim_os.fedora
   - role: ansi_colle.linux.python
   - role: ansi_colle.linux.npm
