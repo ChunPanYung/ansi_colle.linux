@@ -1,0 +1,18 @@
+---
+# tasks file for wsl
+- name: Enable ssh-agent and ssh-add
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^eval $(ssh-agent -s)'
+    line: 'eval $(ssh-agent -s)'
+
+- name: Create gpg config file
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    mode: '0600'
+
+- name: Allow gpg preset password
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    regexp: '^allow-preset-passphrase'
+    line: 'allow-preset-passphrase'
