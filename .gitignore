@@ -17,6 +17,7 @@ __pycache__
 .venv
 .pytest_cache
 poetry.lock
+pdm.lock
 
 # pytest
 /conftest.py
