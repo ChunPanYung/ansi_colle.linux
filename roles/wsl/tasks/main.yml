@@ -12,7 +12,7 @@
   ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^export GPG_TTY='
-    line: '^export GPG_TTY=$(tty)'
+    line: 'export GPG_TTY=$(tty)'
 
 - name: Enable ssh-agent and ssh-add
   ansible.builtin.lineinfile:
