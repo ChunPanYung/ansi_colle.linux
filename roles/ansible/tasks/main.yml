@@ -1,22 +1,14 @@
 ---
 # tasks file for ansible
-- name: Install tools for quick configuration from ansible playbook
+- name: Install ansible
   become: true
-  ansible.builtin.dnf:
-    name:
-      - ansible
-      - python3-ansible-lint
-      - yamllint
+  ansible.builtin.package:
+    name: ansible
 
 - name: Install ansible-language-server from npm
   community.general.npm:
     name: "@ansible/ansible-language-server"
     global: true
-
-- name: Install antsibull-changelog
-  become: false
-  community.general.pipx:
-    name: antsibull-changelog
 
 - name: Install ansible molecule
   become: true
