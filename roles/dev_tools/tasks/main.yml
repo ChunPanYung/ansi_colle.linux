@@ -17,6 +17,7 @@
 - name: Install web development packages
   community.general.npm:
     name: bash-language-server
+    global: true
 
 - name: Import tasks if it is RedHat based system
   ansible.builtin.import_tasks: _fedora.yml
