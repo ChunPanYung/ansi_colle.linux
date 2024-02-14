@@ -10,7 +10,10 @@
     name: "@ansible/ansible-language-server"
     global: true
 
-- name: Install ansible molecule
-  become: true
-  ansible.builtin.dnf:
-    name: python3-molecule
+- name: Install ansible tools
+  community.general.pipx:
+    name: "{{ item }}"
+  loop:
+    - molecule
+    - ansible-lint
+    - yamllint
