@@ -1,0 +1,18 @@
+---
+- name: Execute on localhost (WSL)
+  hosts: wsl
+  vars_prompt:
+    - name: ansible_become_pass
+      prompt: "BECOME password"
+
+  roles:
+    - role: ansi_colle.linux.home_config
+      tags: home_config
+    - role: ansi_colle.linux.python
+      tags: python
+    - role: ansi_colle.linux.ansible
+      tags: ansible
+    - role: ansi_colle.linux.dev_tools
+      tags: dev_tools
+    - role: ansi_colle.linux.wsl
+      tags: wsl
