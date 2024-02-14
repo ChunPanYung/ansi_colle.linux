@@ -1,5 +1,11 @@
 ---
 # tasks file for wsl
+- name: Setup GPG_TTY variable
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^export GPG_TTY='
+    line: '^export GPG_TTY=$(tty)'
+
 - name: Enable ssh-agent and ssh-add
   ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
@@ -8,11 +14,14 @@
 
 - name: Create gpg config file
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    src: gpg-agent.conf
+    dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
     mode: '0600'
 
-- name: Allow gpg preset password
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
-    regexp: '^allow-preset-passphrase'
-    line: 'allow-preset-passphrase'
+- name: Setup pinentry for GPG
+  become: true
+  when: ansible_os_family == 'Debian'
+  block:
+    - name: Install pinentry program
+      ansible.builtin.apt:
+        name: pinentry-tty
