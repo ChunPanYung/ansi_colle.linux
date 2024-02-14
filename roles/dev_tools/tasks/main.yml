@@ -1,8 +1,23 @@
 ---
 # linux -> dev_tools/tasks/
-- name: Import tasks if it is Debian based system
-  ansible.builtin.import_tasks: _ubuntu.yml
-  when: ansible_os_family == 'Debian'
+- name: Install utilities
+  become: true
+  ansible.builtin.package:
+    name:
+      - fd-find
+      - ripgrep
+
+- name: Install shell script tools
+  become: true
+  ansible.builtin.package:
+    name:
+      - shellcheck
+      - shfmt
+
+- name: Install web development packages
+  community.general.npm:
+    name: bash-language-server
+    global: true
 
 - name: Import tasks if it is RedHat based system
   ansible.builtin.import_tasks: _fedora.yml

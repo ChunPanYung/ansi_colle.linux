@@ -1,0 +1,13 @@
+---
+- name: Create .vscode directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.vscode-server/data/Machine/"
+    state: directory
+    mode: '0755'
+  register: output
+
+- name: Copy vscode_settings.json to .vscode directory and rename it
+  ansible.builtin.copy:
+    src: "vs_code_settings.json"
+    dest: "{{ output.path }}/settings.json"
+    mode: '0644'

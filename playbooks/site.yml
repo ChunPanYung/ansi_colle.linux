@@ -6,7 +6,7 @@
       prompt: "BECOME password"
 
   roles:
-    - role: slim_linux.dnf.fedora
+    - role: ansi_colle.slim_os.fedora
       tags: fedora
     - role: ansi_colle.linux.npm
       tags: npm
@@ -24,10 +24,6 @@
       tags: lang
     - role: ansi_colle.linux.dev_tools
       tags: dev_tools
-    - role: ansi_colle.server.rclone
-      tags: rclone
-    - role: comm_config
-      tags: common
     - role: ansi_colle.linux.kopia
       tags: kopia
     - role: ansi_colle.linux.sys_config
@@ -42,3 +38,19 @@
       tags: containers
     - role: ansi_colle.linux.kuro
       tags: kuro
+
+- name: Execute on localhost (WSL)
+  hosts: wsl
+  vars_prompt:
+    - name: ansible_become_pass
+      prompt: "BECOME password"
+
+  roles:
+    - role: ansi_colle.linux.home_config
+      tags: home_config
+    - role: ansi_colle.linux.python
+      tags: python
+    - role: ansi_colle.linux.dev_tools
+      tags: dev_tools
+    - role: ansi_colle.linux.wsl
+      tags: wsl
