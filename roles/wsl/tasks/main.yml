@@ -3,7 +3,7 @@
 - name: Ensure bash_aliases present
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.bash_aliases"
-    state: file
+    state: touch
     mode: '0644'
 
 - name: Setup GPG_TTY variable
