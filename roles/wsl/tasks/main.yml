@@ -1,5 +1,10 @@
 ---
 # tasks file for wsl
+- name: Ensure bash_aliases present
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.bash_aliases"
+    mode: '0644'
+
 - name: Setup GPG_TTY variable
   ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
@@ -30,3 +35,9 @@
       community.general.alternatives:
         name: pinentry
         path: /usr/bin/pinentry-tty
+
+    - name: Setup alias equivalent of 'ssh-add'
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_user_dir }}/.bash_aliases"
+        regexp: '^alias gpg-add='
+        line: "alias gpg-add='echo | gpg -s > /dev/null'"
