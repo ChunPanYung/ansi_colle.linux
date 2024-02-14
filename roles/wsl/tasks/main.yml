@@ -13,7 +13,7 @@
     line: 'eval $(ssh-agent -s)'
 
 - name: Create gpg config file
-  ansible.builtin.file:
+  ansible.builtin.copy:
     src: gpg-agent.conf
     dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
     mode: '0600'
