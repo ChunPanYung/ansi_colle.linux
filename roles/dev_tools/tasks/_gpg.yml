@@ -6,34 +6,22 @@
     state: directory
     mode: '0700'
 
-- name: Make sure gpg.conf exist
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
+- name: Create gpg config file
+  ansible.builtin.copy:
+    src: gpg-agent.conf
+    dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
     mode: '0600'
 
-- name: Configure gpg.conf file
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
-    append_newline: true
-    prepend_newline: true
-    block: |
-      pinentry-program /usr/bin/pinentry-curses
-      default-cache-ttl 31536000
-      default-cache-ttl-ssh 31536000
-      max-cache-ttl 31536000
-      max-cache-ttl-ssh 31536000
+- name: Setup GPG_TTY variable
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^export GPG_TTY='
+    line: 'export GPG_TTY=$(tty)'
 
 - name: Install pinentry
   become: true
   ansible.builtin.package:
     name: pinetry
-
-- name: Setup TTY variable for gpg pinentry
-  when: ansible_os_family == 'RedHat'
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.bash_profile"
-    regexp: '^export GPG_TTY='
-    line: 'export GPG_TTY=$(tty)  # Setup for pinentry'
 
 # eval "$(gpg-agent --daemon)" > /dev/null # Enable gpg-agent on startup
     # alias gpg-add= echo | gpg -s > dev/null
