@@ -1,0 +1,4 @@
+---
+g_home_bashrc: "{{ ansible_user_dir }}/.bashrc"
+g_home_profile: "{{ ansible_user_dir }}/.bash_profile"
+g_home_aliaes: "{{ ansible_user_dir }}/.bashrc.d/aliases.bash"
