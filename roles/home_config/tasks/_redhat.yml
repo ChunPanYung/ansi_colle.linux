@@ -1,0 +1,40 @@
+---
+- name: Setup bash profile
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bash_profile"
+    block: "{{ lookup('ansible.builtin.file', 'profile.sh') }}"
+    insertafter: "EOF"
+
+- name: Create bashrc.d directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.bashrc.d"
+    state: directory
+    mode: '0755'
+
+- name: Copy file containing bash aliases
+  ansible.builtin.copy:
+    src: aliases.bash
+    dest: "{{ ansible_user_dir }}/.bashrc.d/"
+    mode: '0644'
+
+- name: Setup opt PATH
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "^export PATH"
+    marker: "# {mark} SETUP OPT PATH"
+    block: |
+      if ! [[ "$PATH" =~ "$HOME/.local/opt:" ]]
+      then
+        PATH="$HOME/.local/opt:$PATH"
+      fi
+
+- name: Setup script PATH
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "^export PATH"
+    marker: "# {mark} SETUP SCRIPT PATH"
+    block: |
+      if ! [[ "$PATH" =~ "$HOME/.local/script:" ]]
+      then
+        PATH="$HOME/.local/script:$PATH"
+      fi
