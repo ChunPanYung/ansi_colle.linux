@@ -23,7 +23,7 @@
     insertbefore: "^export PATH"
     marker: "# {mark} SETUP OPT PATH"
     block: |
-      if ! [[ "$PATH" =~ "$HOME/.local/opt:" ]]
+      if ! [[ "$PATH" =~ $HOME/.local/opt: ]]
       then
         PATH="$HOME/.local/opt:$PATH"
       fi
@@ -34,7 +34,7 @@
     insertbefore: "^export PATH"
     marker: "# {mark} SETUP SCRIPT PATH"
     block: |
-      if ! [[ "$PATH" =~ "$HOME/.local/script:" ]]
+      if ! [[ "$PATH" =~ $HOME/.local/script: ]]
       then
         PATH="$HOME/.local/script:$PATH"
       fi

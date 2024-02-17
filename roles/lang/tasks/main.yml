@@ -14,7 +14,7 @@
     insertbefore: "export PATH"
     marker: "# {mark} SETUP RUBY PATH"
     block: |
-      if ! [[ "$PATH" =~ "$GEM_HOME/bin" ]] ; then
+      if ! [[ "$PATH" =~ $GEM_HOME/bin: ]] ; then
         PATH="$GEM_HOME/bin:$PATH"
       fi
   when: lang_setup_ruby
@@ -26,7 +26,7 @@
     marker: "# {mark} SETUP GO PATH"
     block: |
       export GOPATH="$HOME/.go"
-      if ! [[ "$PATH" =~ "$GOPATH/bin" ]] ; then
+      if ! [[ "$PATH" =~ $GOPATH/bin: ]] ; then
         PATH="$GOPATH/bin:$PATH"
       fi
   when: lang_setup_go
@@ -47,6 +47,6 @@
         insertbefore: "export PATH"
         marker: "# {mark} SETUP RUST PATH"
         block: |
-          if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]] ; then
+          if ! [[ "$PATH" =~ $HOME/.cargo/bin: ]] ; then
             PATH="$HOME/.cargo/bin:$PATH"
           fi

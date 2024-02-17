@@ -26,4 +26,3 @@
       community.general.alternatives:
         name: pinentry
         path: /usr/bin/pinentry-tty
-
