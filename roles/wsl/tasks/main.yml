@@ -27,8 +27,3 @@
         name: pinentry
         path: /usr/bin/pinentry-tty
 
-    - name: Setup alias equivalent of 'ssh-add'
-      ansible.builtin.lineinfile:
-        path: "{{ ansible_user_dir }}/.bash_aliases"
-        regexp: '^alias gpg-add='
-        line: "alias gpg-add='echo | gpg -s > /dev/null'"

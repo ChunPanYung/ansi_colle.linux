@@ -14,7 +14,7 @@
 
 - name: Setup GPG_TTY variable
   ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
+    path: "{{ g_home_bashrc }}"
     regexp: '^export GPG_TTY='
     line: 'export GPG_TTY=$(tty)'
 
@@ -22,6 +22,12 @@
   become: true
   ansible.builtin.package:
     name: pinetry
+
+- name: Setup gpg alias equivalent of 'ssh-add'
+  ansible.builtin.lineinfile:
+    path: "{{ g_home_aliases }}"
+    regexp: '^alias gpg-add='
+    line: "alias gpg-add='echo | gpg -s > /dev/null'"
 
 # eval "$(gpg-agent --daemon)" > /dev/null # Enable gpg-agent on startup
     # alias gpg-add= echo | gpg -s > dev/null
