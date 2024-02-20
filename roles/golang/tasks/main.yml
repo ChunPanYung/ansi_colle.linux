@@ -24,6 +24,6 @@
     marker: "# {mark} SETUP GO PATH"
     block: |
       # export GOPATH="$HOME/.go"
-      if ! [[ "$PATH" =~ "$GOPATH/bin" ]] ; then
+      if ! [[ "$PATH" =~ $GOPATH/bin ]] ; then
         PATH="$GOPATH/bin:$PATH"
       fi
