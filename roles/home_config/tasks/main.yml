@@ -1,31 +1,10 @@
 ---
 # linux -> home_config/tasks
-- name: Setup Shell Environment on RedHat Based OS
-  when: ansible_os_family == 'RedHat'
-  block:
-    - name: Create $HOME/.local/state for XDG_STATE_HOME
-      ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/state"
-        state: directory
-        mode: '0755'
-
-    - name: Setup bash profile
-      ansible.builtin.blockinfile:
-        path: "{{ ansible_user_dir }}/.bash_profile"
-        block: "{{ lookup('ansible.builtin.file', 'profile.sh') }}"
-        insertafter: "EOF"
-
-    - name: Create bashrc.d directory
-      ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.bashrc.d"
-        state: directory
-        mode: '0755'
-
-    - name: Copy file containing bash aliases
-      ansible.builtin.copy:
-        src: aliases.bash
-        dest: "{{ ansible_user_dir }}/.bashrc.d/"
-        mode: '0644'
+- name: Create $HOME/.local/state for XDG_STATE_HOME
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/state"
+    state: directory
+    mode: '0755'
 
 - name: Ensure private directory on keys and secrets
   ansible.builtin.file:
@@ -59,28 +38,6 @@
     state: directory
     mode: '0750'
 
-- name: Setup opt PATH
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    insertbefore: "^export PATH"
-    marker: "# {mark} SETUP OPT PATH"
-    block: |
-      if ! [[ "$PATH" =~ "$HOME/.local/opt:" ]]
-      then
-        PATH="$HOME/.local/opt:$PATH"
-      fi
-
-- name: Setup script PATH
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    insertbefore: "^export PATH"
-    marker: "# {mark} SETUP SCRIPT PATH"
-    block: |
-      if ! [[ "$PATH" =~ "$HOME/.local/script:" ]]
-      then
-        PATH="$HOME/.local/script:$PATH"
-      fi
-
 - name: Customize git configuration
   block:
     - name: Default gitconfig file
@@ -99,3 +56,8 @@
     path: "{{ ansible_user_dir }}/.bashrc"
     block: "{{ lookup('ansible.builtin.file', 'bashrc.bash') }}"
     marker: "# {mark} PERSONALIZE BASH"
+
+- name: Execute tasks specific to RedHat based OS
+  ansible.builtin.include_tasks:
+    file: _redhat.yml
+  when: ansible_os_family == 'RedHat'

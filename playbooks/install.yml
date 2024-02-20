@@ -17,6 +17,7 @@
         name: "{{ item }}"
       loop:
         - git+https://github.com/ChunPanYung/ansi_colle-slim_os.git,main
+        - git+https://github.com/ChunPanYung/ansi_colle-server.git,main
 
     - name: Install this collection
       vars:

@@ -1,0 +1,46 @@
+---
+# tasks file for wsl
+- name: Ensure bash_aliases present
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.bash_aliases"
+    state: touch
+    mode: '0644'
+    modification_time: preserve
+    access_time: preserve
+
+- name: Setup GPG_TTY variable
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^export GPG_TTY='
+    line: 'export GPG_TTY=$(tty)'
+
+- name: Enable ssh-agent and ssh-add
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^eval $(ssh-agent -s)'
+    line: 'eval $(ssh-agent -s)'
+
+- name: Create gpg config file
+  ansible.builtin.copy:
+    src: gpg-agent.conf
+    dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    mode: '0600'
+
+- name: Setup pinentry for GPG
+  become: true
+  when: ansible_os_family == 'Debian'
+  block:
+    - name: Install pinentry program
+      ansible.builtin.apt:
+        name: pinentry-tty
+
+    - name: Update to use pinentry-tty
+      community.general.alternatives:
+        name: pinentry
+        path: /usr/bin/pinentry-tty
+
+    - name: Setup alias equivalent of 'ssh-add'
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_user_dir }}/.bash_aliases"
+        regexp: '^alias gpg-add='
+        line: "alias gpg-add='echo | gpg -s > /dev/null'"

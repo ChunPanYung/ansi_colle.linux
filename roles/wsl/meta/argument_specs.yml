@@ -1,0 +1,9 @@
+---
+argument_specs:
+  main:
+    short_description: Setup and configure WSL.
+    description:
+      - Setup and configure WSL.
+    author:
+      - Chun Pan Yung
+    options: {}

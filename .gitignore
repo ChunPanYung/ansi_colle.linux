@@ -16,7 +16,9 @@ hosts.yml
 __pycache__
 .venv
 .pytest_cache
+.pdm-python
 poetry.lock
+pdm.lock
 
 # pytest
 /conftest.py

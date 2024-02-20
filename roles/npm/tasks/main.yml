@@ -1,17 +1,10 @@
 ---
-- name: Install node on Debian system
+- name: Install nodejs and npm
   become: true
-  ansible.builtin.apt:
-    name: nodejs
-  when: ansible_os_family == 'Debian'
-
-- name: Install nodejs on RedHat system
-  become: true
-  ansible.builtin.dnf:
+  ansible.builtin.package:
     name:
       - nodejs
       - npm
-  when: ansible_os_family == 'RedHat'
 
 - name: Create npm configuration file, do not change times to make it idempotent
   ansible.builtin.file:
@@ -27,7 +20,19 @@
     regexp: '^prefix='
     line: "prefix={{ ansible_user_dir }}/.npm-global"
 
+- name: Setup PATH for npm for Debian based OS
+  when: ansible_os_family == 'Debian'
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.profile"
+    insertbefore: "^export PATH"
+    marker: "# {mark} SETUP NPM PATH"
+    block: |
+      if [ -d "$HOME/.npm-global/bin" ] ; then
+          PATH="$HOME/.npm-global/bin:$PATH"
+      fi
+
 - name: Setup PATH for npm
+  when: ansible_os_family == 'RedHat'
   ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     insertbefore: "^export PATH"
@@ -37,14 +42,6 @@
       then
         PATH="$HOME/.npm-global/bin:$PATH"
       fi
-
-- name: Install neovim packages
-  community.general.npm:
-    name: "{{ item }}"
-    global: true
-  loop:
-    - neovim
-    - tree-sitter-cli
 
 - name: Install web development packages
   community.general.npm:

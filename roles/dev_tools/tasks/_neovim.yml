@@ -1,20 +1,4 @@
 ---
-- name: Install Rust and library
-  block:
-    - name: Install Rust, package manager and format tool
-      become: true
-      ansible.builtin.apt:
-        name:
-          - rustc
-          - cargo
-          - rustfmt
-
-    - name: Install fd and rg from Rust
-      community.general.cargo:
-        name:
-          - fd-find
-          - ripgrep
-
 - name: Setup editor
   become: false
   vars:
@@ -33,6 +17,14 @@
         dest: "{{ dev_tools_user_dir }}"
         mode: '0755'
 
-    - name: Install pynvim
-      ansible.builtin.pip:
-        name: pynvim
+- name: Install pynvim
+  community.general.pipx:
+    name: pynvim
+
+- name: Install neovim packages
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - neovim
+    - tree-sitter-cli
