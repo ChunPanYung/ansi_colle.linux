@@ -1,0 +1,9 @@
+---
+argument_specs:
+  main:
+    short_description: Install and setup go programming languages.
+    description:
+      - Install and setup go programming languages
+    author:
+      - Chun Pan Yung
+    options: {}

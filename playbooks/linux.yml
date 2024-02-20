@@ -38,3 +38,5 @@
       tags: containers
     - role: ansi_colle.linux.kuro
       tags: kuro
+    - role: ansi_colle.linux.golang
+      tags: golang
