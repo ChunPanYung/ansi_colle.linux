@@ -1,36 +1,18 @@
-[tool.poetry]
-name = "ansi_colle"
+[project]
+name = "ansi_colle-linux"
 version = "1.0.0"
-description = "Namespace that stores Ansible collections."
-
-license = "MIT"
-
+description = "Default template for PDM package"
 authors = [
-    "Chun Pan Yung"
+    {name = "Chun Pan Yung", email = "31672021+ChunPanYung@users.noreply.github.com"},
 ]
+dependencies = [
+    "ansible>=9.2.0",
+    "tomli-w>=1.0.0",
+]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = {text = "MIT"}
 
-repository = "https://github.com/chunpanyung/ansi_colle-linux"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.dependencies]
-python = ">=3.12, <3.13"
-pip = ">=23.1.2"
-ansible = ">=8.0.0"
-
-[tool.poetry.group.dev.dependencies]
-ansible-lint = { version = ">=6.17", markers = "platform_system != 'Windows'" }
-tomli-w = ">=1.0"  # For ansible-inventory command
-yamllint = ">=1.30"
-pytest-testinfra = ">=8.1"
-molecule = ">=4.0"
-molecule-plugins = ">=23.4"
-
-ruff = { version = "*", optional = true }
-ruff-lsp = { version = "*", optional = true }
-black = { version = "*", optional = true }
-
-[tools.poetry.group.docs.dependencies]
-git-cliff = { version = "*", optional = true }
+[tool.pdm]
+distribution = false

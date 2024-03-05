@@ -1,0 +1,29 @@
+---
+- name: Install golang
+  become: true
+  ansible.builtin.dnf:
+    name: golang
+  when: ansible_os_family == 'RedHat'
+
+- name: Create directory for golang
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.go"
+    state: directory
+    mode: '0755'
+
+- name: Setup 'GOPATH' in profile
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bash_profile"
+    regexp: '^export GOPATH='
+    line: export GOPATH=$HOME/.go
+
+- name: Setup go environment variables
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "export PATH"
+    marker: "# {mark} SETUP GO PATH"
+    block: |
+      # export GOPATH="$HOME/.go"
+      if ! [[ "$PATH" =~ $GOPATH/bin ]] ; then
+        PATH="$GOPATH/bin:$PATH"
+      fi

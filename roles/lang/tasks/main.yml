@@ -19,18 +19,6 @@
       fi
   when: lang_setup_ruby
 
-- name: Setup go environment variables
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    insertbefore: "export PATH"
-    marker: "# {mark} SETUP GO PATH"
-    block: |
-      export GOPATH="$HOME/.go"
-      if ! [[ "$PATH" =~ $GOPATH/bin: ]] ; then
-        PATH="$GOPATH/bin:$PATH"
-      fi
-  when: lang_setup_go
-
 - name: Setup and Install Rust
   when: lang_setup_rust
   block:
