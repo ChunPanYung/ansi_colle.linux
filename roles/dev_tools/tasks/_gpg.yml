@@ -18,10 +18,13 @@
     regexp: '^export GPG_TTY='
     line: 'export GPG_TTY=$(tty)'
 
-- name: Install pinentry
-  become: true
-  ansible.builtin.package:
-    name: pinetry
+- name: Enable gpg-agent daemon on startup
+  ansible.builtin.lineinfile:
+    path: "{{ g_home_profile }}"
+    regexp: '^eval "$(gpg-agent'
+    line: >-
+      'eval "$(gpg-agent --daemon)" > /dev/null  #Eanble gpg-agent on startup'
+
 
 - name: Setup gpg alias equivalent of 'ssh-add'
   ansible.builtin.lineinfile:
@@ -29,5 +32,7 @@
     regexp: '^alias gpg-add='
     line: "alias gpg-add='echo | gpg -s > /dev/null'"
 
-# eval "$(gpg-agent --daemon)" > /dev/null # Enable gpg-agent on startup
-    # alias gpg-add= echo | gpg -s > dev/null
+- name: Install pinentry
+  become: true
+  ansible.builtin.package:
+    name: pinetry
