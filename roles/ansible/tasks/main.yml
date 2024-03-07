@@ -22,8 +22,8 @@
   community.general.ini_file:
     path: "{{ ansible_user_dir }}/.ansible.cfg"
     section: defaults
-    option: GTK_THEME
-    value: Adwaita-dark
+    option: "{{ itme.key }}"
+    value: "{{ item.value }}"
     mode: '0644'
   loop:
     - {key: 'stdout_callback', value: 'yaml'}
