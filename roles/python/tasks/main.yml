@@ -1,6 +1,7 @@
 ---
 # tasks file for pipx
 - name: Install python and related packages
+  become: true
   ansible.builtin.package:
     name:
       - python3-pip
