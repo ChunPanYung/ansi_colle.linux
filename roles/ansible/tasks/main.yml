@@ -22,7 +22,7 @@
   community.general.ini_file:
     path: "{{ ansible_user_dir }}/.ansible.cfg"
     section: defaults
-    option: "{{ itme.key }}"
+    option: "{{ item.key }}"
     value: "{{ item.value }}"
     mode: '0644'
   loop:
