@@ -24,7 +24,7 @@
 - name: Enable gpg-agent daemon on startup
   ansible.builtin.lineinfile:
     path: "{{ g_home_profile }}"
-    regexp: '^eval "$\(gpg-agent'
+    regexp: '^eval "\$\(gpg-agent'
     line: >
       eval "$(gpg-agent --daemon)" > /dev/null  #Eanble gpg-agent on startup
 
