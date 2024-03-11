@@ -28,6 +28,14 @@
     line: >
       eval "$(gpg-agent --daemon)" > /dev/null  #Eanble gpg-agent on startup
 
+- name: Short key id format for gpg
+  community.general.lineinfile:
+    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
+    regexp: "{{ item.key }}"
+    line: "{{ item.value }}"
+  loop:
+    - {key: '^# Long hexidecimal key format', value: '# Short key format'}
+    - {key: '^keyid-format', value: 'keyid-format short'}
 
 - name: Setup gpg alias equivalent of 'ssh-add'
   ansible.builtin.lineinfile:
