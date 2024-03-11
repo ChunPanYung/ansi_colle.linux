@@ -17,3 +17,16 @@
     - molecule
     - ansible-lint
     - yamllint
+
+- name: Setup ansible configuration
+  community.general.ini_file:
+    path: "{{ ansible_user_dir }}/.ansible.cfg"
+    section: defaults
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    mode: '0644'
+  loop:
+    - {key: 'stdout_callback', value: 'yaml'}
+    - {key: 'bin_ansible_callbacks ', value: 'True'}
+    - {key: 'inventory', value: '~/.keys/hosts.cfg'}
+    - {key: 'verbosity', value: '1'}

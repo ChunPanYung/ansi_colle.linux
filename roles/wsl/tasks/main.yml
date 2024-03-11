@@ -8,23 +8,11 @@
     modification_time: preserve
     access_time: preserve
 
-- name: Setup GPG_TTY variable
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    regexp: '^export GPG_TTY='
-    line: 'export GPG_TTY=$(tty)'
-
 - name: Enable ssh-agent and ssh-add
   ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^eval $(ssh-agent -s)'
     line: 'eval $(ssh-agent -s)'
-
-- name: Create gpg config file
-  ansible.builtin.copy:
-    src: gpg-agent.conf
-    dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
-    mode: '0600'
 
 - name: Setup pinentry for GPG
   become: true
@@ -38,9 +26,3 @@
       community.general.alternatives:
         name: pinentry
         path: /usr/bin/pinentry-tty
-
-    - name: Setup alias equivalent of 'ssh-add'
-      ansible.builtin.lineinfile:
-        path: "{{ ansible_user_dir }}/.bash_aliases"
-        regexp: '^alias gpg-add='
-        line: "alias gpg-add='echo | gpg -s > /dev/null'"

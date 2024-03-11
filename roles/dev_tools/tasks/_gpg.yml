@@ -1,0 +1,49 @@
+---
+# Setup gpg and allows preset passphrase
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.gnupg"
+    state: directory
+    mode: '0700'
+
+- name: Create gpg config file
+  ansible.builtin.copy:
+    src: gpg-agent.conf
+    dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    mode: '0600'
+
+- name: Setup GPG_TTY variable
+  ansible.builtin.blockinfile:
+    path: "{{ g_home_bashrc }}"
+    append_newline: true
+    prepend_newline: true
+    block: |
+      GPG_TTY=$(tty)
+      export GPG_TTY
+
+- name: Enable gpg-agent daemon on startup
+  ansible.builtin.lineinfile:
+    path: "{{ g_home_profile }}"
+    regexp: '^eval "\$\(gpg-agent'
+    line: >
+      eval "$(gpg-agent --daemon)" > /dev/null  #Eanble gpg-agent on startup
+
+- name: Short key id format for gpg
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
+    regexp: "{{ item.key }}"
+    line: "{{ item.value }}"
+  loop:
+    - {key: '^# Long hexidecimal key format', value: '# Short key format'}
+    - {key: '^keyid-format', value: 'keyid-format short'}
+
+- name: Setup gpg alias equivalent of 'ssh-add'
+  ansible.builtin.lineinfile:
+    path: "{{ g_home_aliases }}"
+    regexp: '^alias gpg-add='
+    line: "alias gpg-add='echo | gpg -s > /dev/null'"
+
+- name: Install pinentry
+  become: true
+  ansible.builtin.package:
+    name: pinentry

@@ -22,3 +22,6 @@
 - name: Import tasks if it is RedHat based system
   ansible.builtin.import_tasks: _fedora.yml
   when: ansible_os_family == 'RedHat'
+
+- name: Import tasks if it is RedHat based system
+  ansible.builtin.import_tasks: _gpg.yml
