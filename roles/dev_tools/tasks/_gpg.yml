@@ -26,7 +26,7 @@
     path: "{{ g_home_profile }}"
     regexp: '^eval "\$\(gpg-agent'
     line: >
-      eval "$(gpg-agent --daemon)" > /dev/null  #Eanble gpg-agent on startup
+      eval "$(gpg-agent --daemon)" &> /dev/null  #Eanble gpg-agent on startup
 
 - name: Short key id format for gpg
   ansible.builtin.lineinfile:
@@ -41,7 +41,7 @@
   ansible.builtin.lineinfile:
     path: "{{ g_home_aliases }}"
     regexp: '^alias gpg-add='
-    line: "alias gpg-add='echo | gpg -s &> /dev/null'"
+    line: "alias gpg-add='echo | gpg -s > /dev/null'"
 
 - name: Install pinentry
   become: true
