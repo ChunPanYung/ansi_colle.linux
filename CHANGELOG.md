@@ -2,12 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.1.0] - 2024-03-11
+
+### Bug Fixes
+
+- Privilege on task.
+- Ansible-lint error.
+- Looping to setup ini file.
 
 ### Features
 
-- New role for installing kuro.
-- Add kuro role to playbook.
+- New role for installing kuro via github and rpm. (#8)
+- Setup and configure gpg-agent.
+- Setup group variables.
+- [**breaking**] Use `pdm` instead of `poetry`. (#12)
+- [**breaking**] Migrate go installation to new role. (#13)
+- [**breaking**] Remove unused variable.
+- Add script to repo.
+- Setup ansible configuration for user.
+- [**breaking**] Remove ansible.cfg file from repo.
+- Execute gpg to setup alias and enable agent on startup.
+
+### Refactor
+
+- Move tasks into `_gpg.yml` file.
+- Remove warning causes by shellcheck.
+
+### Testing
+
+- Add and setup testinfra example. (#9)
 
 ## [1.0.0] - 2023-12-11
 
