@@ -9,7 +9,7 @@ dependencies = [
     "ansible>=9.2.0",
     "tomli-w>=1.0.0",
 ]
-requires-python = "==3.11.*"
+requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 
