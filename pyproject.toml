@@ -1,6 +1,6 @@
 [project]
 name = "ansi_colle-linux"
-version = "1.0.0"
+dynamic = ["version"]
 description = "Default template for PDM package"
 authors = [
     {name = "Chun Pan Yung", email = "31672021+ChunPanYung@users.noreply.github.com"},
@@ -13,9 +13,12 @@ requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 
-
 [tool.pdm]
 distribution = false
 
 [tool.pdm.scripts]
 install = "ansible-playbooks ansi_colle.linux.install"
+
+[tool.pdm.version]
+source = "call"
+getter = "py.util.get_version"
