@@ -21,4 +21,4 @@ install = "ansible-playbooks ansi_colle.linux.install"
 
 [tool.pdm.version]
 source = "call"
-getter = "py.util.get_version"
+getter = "py.util.get_version('galaxy.yml')"
