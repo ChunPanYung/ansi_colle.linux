@@ -8,11 +8,11 @@
     modification_time: preserve
     access_time: preserve
 
-# - name: Enable ssh-agent and ssh-add
-#   ansible.builtin.lineinfile:
-#     path: "{{ ansible_user_dir }}/.bashrc"
-#     regexp: '^eval $(ssh-agent -s)'
-#     line: 'eval $(ssh-agent -s)'
+- name: Enable ssh-agent and ssh-add
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^eval $(ssh-agent -s)'
+    line: 'eval $(ssh-agent -s)'
 
 - name: Install
   become: true
