@@ -2,6 +2,8 @@
 name: ansible-lint
 'on':
   pull_request:
+    - master
+    - main
 
 jobs:
   build:
@@ -9,5 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install all ansible collection.
+        run: ansible-playbook $GITHUB_WORKSPACE/playbooks/install.yml
+
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
