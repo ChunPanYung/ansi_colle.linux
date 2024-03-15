@@ -8,20 +8,21 @@
     modification_time: preserve
     access_time: preserve
 
-- name: Enable ssh-agent and ssh-add
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    regexp: '^eval $(ssh-agent -s)'
-    line: 'eval $(ssh-agent -s)'
+# - name: Enable ssh-agent and ssh-add
+#   ansible.builtin.lineinfile:
+#     path: "{{ ansible_user_dir }}/.bashrc"
+#     regexp: '^eval $(ssh-agent -s)'
+#     line: 'eval $(ssh-agent -s)'
+
+- name: Install
+  become: true
+  ansible.builtin.package:
+    name: keychain
 
 - name: Setup pinentry for GPG
   become: true
   when: ansible_os_family == 'Debian'
   block:
-    - name: Install pinentry program
-      ansible.builtin.apt:
-        name: pinentry-tty
-
     - name: Update to use pinentry-tty
       community.general.alternatives:
         name: pinentry
