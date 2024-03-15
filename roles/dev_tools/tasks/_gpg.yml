@@ -54,4 +54,4 @@
 - name: Install pinentry
   become: true
   ansible.builtin.package:
-    name: pinentry
+    name: pinentry-tty
