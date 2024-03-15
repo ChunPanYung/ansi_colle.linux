@@ -1,8 +1,7 @@
 {
-  "ansible.python.interpreterPath": "/usr/bin/python3",
   "files.associations": {
     "*.yml": "ansible",
-    "hosts": "ini"
-  }
-
+    ".pre-commit-config.yaml": "yaml"
+  },
+  "ansible.python.activationScript": "~/.venv/ansible/bin/activate"
 }
