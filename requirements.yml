@@ -11,6 +11,9 @@ collections:
   - name: https://github.com/ChunPanYung/ansi_colle-slim_os.git
     type: git
     version: main
+  - name: https://github.com/ChunPanYung/ansi_colle-mods.git
+    type: git
+    version: main
   - name: https://github.com/ChunPanYung/ansi_colle-server.git
     type: git
     version: main
