@@ -28,6 +28,14 @@
     line: >
       eval "$(gpg-agent --daemon &> /dev/null)" #Eanble gpg-agent on startup
 
+- name: Create gpg.conf if it does not exist
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
+    mode: '0644'
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+
 - name: Short key id format for gpg
   ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
