@@ -1,9 +1,10 @@
 ---
-name: ansible-lint
+name: Validate Ansible code
 'on':
   pull_request:
-    - master
-    - main
+    branches:
+      - master
+      - main
 
 jobs:
   build:
@@ -12,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install all ansible collection.
+      - name: Install dependencies
         run: ansible-playbook $GITHUB_WORKSPACE/playbooks/install.yml
 
       - name: Run ansible-lint
