@@ -16,3 +16,5 @@
       tags: dev_tools
     - role: ansi_colle.linux.wsl
       tags: wsl
+    - role: ansi_colle.linux.powershell
+      tags: powershell
