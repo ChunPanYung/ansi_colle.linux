@@ -6,34 +6,21 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- Use module to take care if version does not exist.
-- Specify require variable for role `dev_tools`.
-- 9th option instead of 8 when downloading.
-- Ensure gpg.conf file.
+- 9th option instead of 8 when downloading binary from github.
+- Ensure gpg.conf file exists.
 - Variable name in `group_vars`.
 - Install `pinentry-tty` instead.
 
 ### Features
 
 - Add powershell to wsl playbook. (#16)
+- Add script to append commits to changelog.
+- Use module to compare package version.
+- Specify require variable for role `dev_tools`.
 
 ### Refactor
 
-- Remove temp directory after completion.
-
-### Revert
-
-- Do not use argument_spec for variable options, does not work for group variable.
-
-### Testing
-
-- No option specified.
-- Eanble argument spec check.
-- Setup default value.
-- Different group and enable argument spec.
-- Remove default.
-- Disable argument check.
-- Enable parameter check.
+- Remove temp directory after downloaded and installed the zip file content.
 
 ## [1.1.0] - 2024-03-11
 
