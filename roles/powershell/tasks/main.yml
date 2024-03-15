@@ -40,6 +40,11 @@
         dest: /opt/powershell
         remote_src: true
 
+    - name: Remove temp directory
+      ansible.builtin.file:
+        path: "{{ powershell_tempdir.path }}"
+        state: absent
+
     - name: Create symbolic links
       become: true
       ansible.builtin.file:
