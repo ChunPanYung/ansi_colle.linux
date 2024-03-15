@@ -4,16 +4,16 @@ argument_specs:
     short_description: Main entry point for dev_tools role.
     author:
       - Chun Pan Yung
-    options:
-      g_home_profile:
-        type: "str"
-        required: true
-        description: shell script profile.sh path
-      g_home_bashrc:
-        type: "str"
-        required: true
-        description: bashrc path
-      g_home_aliases:
-        type: "str"
-        required: true
-        description: aliases path
+    options: {}
+      # g_home_profile:
+      #   type: "str"
+      #   required: true
+      #   description: shell script profile.sh path
+      # g_home_bashrc:
+      #   type: "str"
+      #   required: true
+      #   description: bashrc path
+      # g_home_aliases:
+      #   type: "str"
+      #   required: true
+      #   description: aliases path
