@@ -8,12 +8,15 @@ argument_specs:
       g_home_profile:
         type: "str"
         required: true
+        default: "{{ g_home_profile }}"
         description: shell script profile.sh path
       g_home_bashrc:
         type: "str"
         required: true
+        default: "{{ g_home_bashrc }}"
         description: bashrc path
       g_home_aliases:
         type: "str"
         required: true
+        default: "{{ g_home_aliases }}"
         description: aliases path
