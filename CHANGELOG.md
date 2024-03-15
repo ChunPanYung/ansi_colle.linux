@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2024-03-15
+
+### Bug Fixes
+
+- 9th option instead of 8 when downloading binary from github.
+- Ensure gpg.conf file exists.
+- Variable name in `group_vars`.
+- Install `pinentry-tty` instead.
+
+### Features
+
+- Add powershell to wsl playbook. (#16)
+- Add script to append commits to changelog.
+- Use module to compare package version.
+- Specify require variable for role `dev_tools`.
+
+### Refactor
+
+- Remove temp directory after downloaded and installed the zip file content.
+
 ## [1.1.0] - 2024-03-11
 
 ### Bug Fixes
