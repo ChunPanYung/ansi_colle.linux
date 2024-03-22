@@ -54,8 +54,12 @@
 - name: Personalize bash
   ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
-    block: "{{ lookup('ansible.builtin.file', 'bashrc.bash') }}"
     marker: "# {mark} PERSONALIZE BASH"
+    block: |
+      # Do not add space after autocompletion for 'ls' command
+      compopt -o nospace ls
+      # can't use it directly with compopt
+      complete -o nospace -F _longopt source
 
 - name: Execute tasks specific to RedHat based OS
   ansible.builtin.include_tasks:
