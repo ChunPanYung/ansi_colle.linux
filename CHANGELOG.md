@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2024-03-22
+
+### Bug Fixes
+
+
+### Features
+
+- Add powershell to wsl playbook. (#16)
+- Add GitHub Action to validate code and format.
+
+### Refactor
+
+- Use module `blockinfile` isntead of `copy`.
+- Remove files, directly put file contents into task file.
+
+### Styling
+
+- Append and prepend newline.
+
 ## [1.1.1] - 2024-03-15
 
 ### Bug Fixes
