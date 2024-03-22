@@ -14,6 +14,8 @@
 - name: Setup bash aliases
   ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc.d/aliases.bash"
+    append_newline: true
+    prepend_newline: true
     marker: "# {mark} SETUP COMMON ALIASES"
     block: |
       alias less='less --raw-control-chars'

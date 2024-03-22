@@ -54,6 +54,8 @@
 - name: Personalize bash
   ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
+    append_newline: true
+    prepend_newline: true
     marker: "# {mark} PERSONALIZE BASH"
     block: |
       # Do not add space after autocompletion for 'ls' command
