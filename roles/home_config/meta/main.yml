@@ -15,5 +15,4 @@ galaxy_info:
         - all
 
   galaxy_tags: []
-dependencies:
-  - role: ansi_colle.linux.npm
+dependencies: []
