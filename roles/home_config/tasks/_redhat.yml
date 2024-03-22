@@ -11,11 +11,13 @@
     state: directory
     mode: '0755'
 
-- name: Copy file containing bash aliases
-  ansible.builtin.copy:
-    src: aliases.bash
-    dest: "{{ ansible_user_dir }}/.bashrc.d/"
-    mode: '0644'
+- name: Setup bash aliases
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc.d/aliases.bash"
+    marker: "# {mark} SETUP COMMON ALIASES"
+    block: |
+      alias less='less --raw-control-chars'
+      alias python='python3'
 
 - name: Setup opt PATH
   ansible.builtin.blockinfile:
