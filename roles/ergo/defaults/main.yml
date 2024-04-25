@@ -1,0 +1,4 @@
+---
+# defaults file for ergo
+ergo_github_api: >-
+  https://api.github.com/repos/cristianoliveira/ergo/releases/latest
