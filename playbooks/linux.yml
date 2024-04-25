@@ -40,3 +40,5 @@
       tags: kuro
     - role: ansi_colle.linux.golang
       tags: golang
+    - role: ansi_colle.linux.ergo
+      tags: ergo
