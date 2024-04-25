@@ -28,8 +28,6 @@
       tags: kopia
     - role: ansi_colle.linux.sys_config
       tags: sys_config
-    - role: ansi_colle.server.podman
-      tags: podman
     - role: ansi_colle.server.onlyoffice
       tags: onlyoffice
     - role: ansi_colle.linux.powershell
