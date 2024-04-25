@@ -37,3 +37,27 @@
       ansible.builtin.file:
         path: "{{ ergo_tempdir.path }}"
         state: absent
+
+- name: Touch file, but do not change time
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.ergo"
+    state: touch
+    mode: '0644'
+    modification_time: preserve
+    access_time: preserve
+
+- name: Setup proxy configuration on desktop
+  when:
+    - ansible_env.XDG_CURRENT_DESKTOP is defined
+    - ansible_env.XDG_CURRENT_DESKTOP == 'KDE'
+  community.general.ini_file:
+    path: "{{ ansible_user_dir }}/.config/kioslaverc"
+    section: Proxy Settings
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    mode: '0644'
+    no_extra_spaces: true
+    backup: true
+  loop:
+    - {key: 'Proxy Config Script', value: 'http://localhost:2000/proxy.pac'}
+    - {key: 'ProxyType', value: '2'}
