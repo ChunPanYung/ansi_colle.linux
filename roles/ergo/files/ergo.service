@@ -1,0 +1,9 @@
+[Unit]
+Description=Create local reverse proxy based on $HOME/.ergo file.
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/env bash -c 'ERGO_DOMAIN=.test ; ergo run'
+
+[Install]
+WantedBy=default.target
