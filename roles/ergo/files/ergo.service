@@ -3,8 +3,7 @@ Description=Create local reverse proxy based on $HOME/.ergo file.
 
 [Service]
 Type=simple
-Environment="ERGO_DOMAIN=.test"
-ExecStart=/bin/bash -c 'ergo run -config ~/.ergo'
+ExecStart=/bin/bash -c 'ergo run -config ~/.ergo -domain .test'
 
 [Install]
 WantedBy=default.target
