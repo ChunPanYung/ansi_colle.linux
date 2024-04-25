@@ -1,0 +1,8 @@
+---
+- name: Enable and execute ergo.service on user scope
+  ansible.builtin.systemd_service:
+    name: ergo
+    state: restarted
+    daemon_reload: true
+    enabled: true
+    scope: user

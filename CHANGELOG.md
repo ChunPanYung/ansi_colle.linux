@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2024-04-25
+
+### Features
+
+- Initial role to setup and configure ergo.
+- Add ergo role to playbook.
+- [**breaking**] Remove deprecated role.
+
 ## [1.1.2] - 2024-03-22
 
 ### Features

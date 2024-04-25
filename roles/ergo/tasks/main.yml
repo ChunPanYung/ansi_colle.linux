@@ -1,0 +1,71 @@
+---
+# tasks file for ergo
+- name: Retrieve information from github api
+  ansible.builtin.uri:
+    url: "{{ ergo_github_api }}"
+    return_content: true
+  register: ergo_api
+
+- name: Compare to current ergo version if it exists
+  ansi_colle.mods.cmp_pkg:
+    command_name: ergo
+    desired_version: "{{ ergo_api.json.tag_name[1:] }}"
+    arg: -v
+  register: ergo_cmp
+
+- name: Execute the following if version is not the latest
+  when: (ergo_cmp.rc == 2) or (ergo_cmp.rc ==1)
+  block:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+      register: ergo_tempdir
+
+    - name: Download executables for linux x64 system
+      ansible.builtin.get_url:
+        url: "{{ ergo_api.json.assets[1].browser_download_url }}"
+        dest: "{{ ergo_tempdir.path }}/ergo.tgz"
+        mode: '0644'
+
+    - name: Extract file to /opt directory
+      ansible.builtin.unarchive:
+        src: "{{ ergo_tempdir.path }}/ergo.tgz"
+        dest: "{{ ansible_user_dir }}/.local/bin/"
+        remote_src: true
+
+    - name: Remove temp directory
+      ansible.builtin.file:
+        path: "{{ ergo_tempdir.path }}"
+        state: absent
+
+- name: Touch file, but do not change time
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.ergo"
+    state: touch
+    mode: '0644'
+    modification_time: preserve
+    access_time: preserve
+
+- name: Setup proxy configuration on desktop
+  when:
+    - ansible_env.XDG_CURRENT_DESKTOP is defined
+    - ansible_env.XDG_CURRENT_DESKTOP == 'KDE'
+  community.general.ini_file:
+    path: "{{ ansible_user_dir }}/.config/kioslaverc"
+    section: Proxy Settings
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    mode: '0644'
+    no_extra_spaces: true
+    backup: true
+  loop:
+    - {key: 'Proxy Config Script', value: 'http://localhost:2000/proxy.pac'}
+    - {key: 'ProxyType', value: '2'}
+
+- name: Create systemd unit file on home directory
+  ansible.builtin.copy:
+    src: ergo.service
+    dest: "{{ ansible_user_dir }}/.config/systemd/user/"
+    mode: '0644'
+  notify:
+    - Enable and execute ergo.service on user scope
