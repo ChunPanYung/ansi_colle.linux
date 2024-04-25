@@ -23,7 +23,7 @@
 
     - name: Download executables for linux x64 system
       ansible.builtin.get_url:
-        url: "{{ ergo_api.json.assets[2].browser_download_url }}"
+        url: "{{ ergo_api.json.assets[1].browser_download_url }}"
         dest: "{{ ergo_tempdir.path }}/ergo.tgz"
         mode: '0644'
 
