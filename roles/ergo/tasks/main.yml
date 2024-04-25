@@ -67,3 +67,5 @@
     src: ergo.service
     dest: "{{ ansible_user_dir }}/.config/systemd/user/"
     mode: '0644'
+  notify:
+    - Enable and execute ergo.service on user scope
