@@ -3,7 +3,7 @@ pipeline {
     // parameters {}
     stages {
         stage('Checkout') {
-            steps{
+            steps {
                 deleteDir()
                 checkout scmGit(
                     branches: [[name: env.BRANCH_NAME]],
@@ -16,7 +16,9 @@ pipeline {
         }
 
         stage('Process') {
-            sh 'ls -la'
+            steps {
+                sh 'ls -la'
+            }
         }
     }  // End stages
     post {
