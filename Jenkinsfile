@@ -8,8 +8,8 @@ pipeline {
                 echo env.BRANCH_NAME
                 checkout scmGit(
                     branches: [[name: "${env.BRANCH_NAME}"]],
-                    extension: [cloneOption(shallow: true)],
-                    userRemoteConfig: [
+                    extensions: [ cloneOption(shallow: true) ],
+                    userRemoteConfigs: [
                         [url: 'https://github.com/ChunPanYung/ansi_colle-linux.git']
                     ]
                 )
