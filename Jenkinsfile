@@ -13,13 +13,8 @@ pipeline {
                     ]
                 )
             }
-        }
+        }  // Eng stage('Checkout')
 
-        stage('Process') {
-            steps {
-                sh 'ls -la'
-            }
-        }
     }  // End stages
     post {
         always {
