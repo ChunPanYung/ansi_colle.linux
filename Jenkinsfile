@@ -1,14 +1,13 @@
 pipeline {
     agent { label 'python' }
     parameters {
-        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main',
-            name: 'BRANCH', type: 'PT_BRANCH'
     }
     stages {
         stage('Test') {
             steps{
-                git branch: "${params.BRANCH}",
-                    url: 'https://github.com/ChunPanYung/ansi_colle-linux.git'
+                // git branch: "${params.BRANCH}",
+                //     url: 'https://github.com/ChunPanYung/ansi_colle-linux.git'
+                echo "hello world!"
             }
         }
     }  // End stages
