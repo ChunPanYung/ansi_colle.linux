@@ -5,8 +5,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 deleteDir()
+                echo env.BRANCH_NAME
                 checkout scmGit(
-                    branches: [[name: env.BRANCH_NAME]],
+                    branches: [[name: "${env.BRANCH_NAME}"]],
                     extension: [cloneOption(shallow: true)],
                     userRemoteConfig: [
                         [url: 'https://github.com/ChunPanYung/ansi_colle-linux.git']
@@ -14,6 +15,11 @@ pipeline {
                 )
             }
         }  // Eng stage('Checkout')
+        stage('Process') {
+            steps {
+                sh 'ls -la'
+            }
+        }  // Eng stage('Process')
 
     }  // End stages
     post {
