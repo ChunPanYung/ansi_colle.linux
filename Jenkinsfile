@@ -2,13 +2,21 @@ pipeline {
     agent { label 'python' }
     // parameters {}
     stages {
-        stage('Test') {
+        stage('Checkout') {
             steps{
-                // git branch: "${params.BRANCH}",
-                //     url: 'https://github.com/ChunPanYung/ansi_colle-linux.git'
-                echo "hello world!"
-                echo env.BRANCH_NAME
+                deleteDir()
+                checkout scmGit(
+                    branches: [[name: env.BRANCH_NAME]],
+                    extension: [cloneOption(shallow: true)],
+                    userRemoteConfig: [
+                        [url: 'https://github.com/ChunPanYung/ansi_colle-linux.git']
+                    ]
+                )
             }
+        }
+
+        stage('Process') {
+            sh 'ls -la'
         }
     }  // End stages
     post {
