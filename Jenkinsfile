@@ -5,6 +5,7 @@ pipeline {
         stage('Process') {
             steps {
                 sh 'ls -la'
+                sh 'echo $USER'
                 sh 'ansible --version'
             }
         }  // Eng stage('Process')
