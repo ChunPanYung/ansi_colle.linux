@@ -7,8 +7,8 @@ pipeline {
                 sh 'ls -la'
                 sh '''
                 echo $USER
+                echo $PATH
                 ansible --version
-                sh echo $PATH
                 '''
             }
         }  // Eng stage('Process')
