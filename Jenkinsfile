@@ -7,7 +7,7 @@ pipeline {
                 deleteDir()
                 echo env.BRANCH_NAME
                 checkout scmGit(
-                    branches: [[name: "${env.BRANCH_NAME}"]],
+                    branches: [[name: ${env.BRANCH_NAME}]],
                     extensions: [ cloneOption(shallow: true) ],
                     userRemoteConfigs: [
                         [url: 'https://github.com/ChunPanYung/ansi_colle-linux.git']
