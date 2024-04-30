@@ -8,8 +8,12 @@ pipeline {
             }
             steps {
                 ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
-                    hosts: 'locahost',
-                    moduleArguments: 'setup'
+                    inventoryContent: '''
+                    [all]
+                    localhost ansible_connection=local
+                    ''',
+                    hosts: 'all',
+                    module: 'setup'
                 )
             }
         }  // End stage('Ansible')
