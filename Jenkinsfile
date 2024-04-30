@@ -8,6 +8,7 @@ pipeline {
                 sh '''
                 echo $USER
                 echo $PATH
+                ls ~/.local/bin
                 ansible --version
                 '''
             }
