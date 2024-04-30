@@ -10,7 +10,11 @@ pipeline {
                 ansiColor('xterm') {
                     ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
-                        inventory: "${env.ANSIBLE_INVENTORY_FILE}",
+                        // inventory: "${env.ANSIBLE_INVENTORY_FILE}",
+                        inventoryContent: '''
+                        [linux]
+                        localhost ansible_connection=local
+                        ''',
                         hosts: 'linux',
                         module: 'setup'
                     )
