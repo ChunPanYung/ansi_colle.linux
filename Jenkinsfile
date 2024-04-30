@@ -2,7 +2,7 @@ pipeline {
     agent { label 'python' }
     // parameters {}
     stages {
-        stage('Process') {
+        stage('Prepare inventories') {
             steps {
                 sh 'ls -la'
                 sh '''
@@ -14,6 +14,14 @@ pipeline {
                 '''
             }
         }  // Eng stage('Process')
+        stage('Ansible') {
+            environment {
+                ANSIBLE_INVENTORY_FILE = credentials 'hosts.cfg'
+            }
+            steps {
+                echo "Path is: ${env.ANSIBLE_INVENTORY_FILE}"
+            }
+        }  // End stage('Ansible')
 
     }  // End stages
     post {
