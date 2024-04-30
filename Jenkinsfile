@@ -11,10 +11,10 @@ pipeline {
                     ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
                         inventoryContent: '''
-                        [all]
+                        [linux]
                         localhost ansible_connection=local
                         ''',
-                        hosts: 'all',
+                        hosts: 'linux',
                         module: 'setup'
                     )
                 }
