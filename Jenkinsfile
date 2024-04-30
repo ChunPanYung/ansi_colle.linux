@@ -9,9 +9,10 @@ pipeline {
             }
             steps {
                 ansiColor('xterm') {
-                    ansibleAdhoc(credentialsId: "${env.ANSIBLE_SSH_PRIVATE_KEY}",
+                    ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE',
                         colorized: true,
                         inventory: "${env.ANSIBLE_INVENTORY_FILE}",
+                        becomeUser: 'infinite4ever'
                         hosts: 'linux',
                         module: 'setup'
                     )
