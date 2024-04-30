@@ -8,7 +8,7 @@ pipeline {
             }
             steps {
                 ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
-                    inventory: "${env.ANSIBLE_INVENTORY_FILE}", hosts: 'linux',
+                    inventory: "ANSIBLE_INVENTORY", hosts: 'linux',
                     moduleArguments: 'setup'
                 )
             }
