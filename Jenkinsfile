@@ -16,7 +16,7 @@ pipeline {
         }  // Eng stage('Process')
         stage('Ansible') {
             environment {
-                ANSIBLE_INVENTORY_FILE = credentials 'hosts.cfg'
+                ANSIBLE_INVENTORY_FILE = credentials 'ANSIBLE_INVENTORY'
             }
             steps {
                 echo "Path is: ${env.ANSIBLE_INVENTORY_FILE}"
