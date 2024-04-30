@@ -5,10 +5,11 @@ pipeline {
         stage('Ansible') {
             environment {
                 ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY')
+                ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
             }
             steps {
                 ansiColor('xterm') {
-                    ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
+                    ansibleAdhoc(credentialsId: "${env.ANSIBLE_SSH_PRIVATE_KEY}",
                         colorized: true,
                         inventory: "${env.ANSIBLE_INVENTORY_FILE}",
                         hosts: 'linux',
