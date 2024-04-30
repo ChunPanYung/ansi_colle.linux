@@ -12,7 +12,7 @@ pipeline {
                     ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE',
                         colorized: true,
                         inventory: "${env.ANSIBLE_INVENTORY_FILE}",
-                        becomeUser: 'infinite4ever'
+                        becomeUser: 'infinite4ever',
                         hosts: 'linux',
                         module: 'setup'
                     )
