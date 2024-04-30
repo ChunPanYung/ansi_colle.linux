@@ -8,7 +8,7 @@ pipeline {
             }
             steps {
                 ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
-                    inventory: "jenkins ansible_connection=local", hosts: 'locahost',
+                    hosts: 'locahost',
                     moduleArguments: 'setup'
                 )
             }
