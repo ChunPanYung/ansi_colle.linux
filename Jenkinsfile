@@ -7,7 +7,10 @@ pipeline {
                 ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY')
             }
             steps {
-                echo "Path is: ${env.ANSIBLE_INVENTORY_FILE}"
+                ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
+                    inventory: "${env.ANSIBLE_INVENTORY_FILE}", hosts: 'linux',
+                    moduleArguments: 'setup'
+                )
             }
         }  // End stage('Ansible')
 
