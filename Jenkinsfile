@@ -8,11 +8,14 @@ pipeline {
                 ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
             }
             steps {
+                sh """
+                sha256sum ${env.ANSIBLE_INVENTORY}
+                sha256sum ${env.ANSIBLE_SSH_PRIVATE_KEY}
+                """
                 ansiColor('xterm') {
-                    ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE',
+                    ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
                         inventory: "${env.ANSIBLE_INVENTORY_FILE}",
-                        becomeUser: 'infinite4ever',
                         hosts: 'linux',
                         module: 'setup'
                     )
