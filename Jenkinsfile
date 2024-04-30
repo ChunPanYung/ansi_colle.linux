@@ -7,14 +7,17 @@ pipeline {
                 ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY')
             }
             steps {
-                ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
-                    inventoryContent: '''
-                    [all]
-                    localhost ansible_connection=local
-                    ''',
-                    hosts: 'all',
-                    module: 'setup'
-                )
+                ansiColor('xterm') {
+                    ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
+                        colorized: true,
+                        inventoryContent: '''
+                        [all]
+                        localhost ansible_connection=local
+                        ''',
+                        hosts: 'all',
+                        module: 'setup'
+                    )
+                }
             }
         }  // End stage('Ansible')
 
