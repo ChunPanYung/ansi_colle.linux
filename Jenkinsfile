@@ -9,7 +9,7 @@ pipeline {
             }
             steps {
                 sh """
-                sha256sum ${env.ANSIBLE_INVENTORY}
+                sha256sum ${env.ANSIBLE_INVENTORY_FILE}
                 sha256sum ${env.ANSIBLE_SSH_PRIVATE_KEY}
                 """
                 ansiColor('xterm') {
