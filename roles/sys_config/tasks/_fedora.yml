@@ -2,6 +2,12 @@
 - name: Execute tasks with sudo
   become: true
   block:
+    - name: Enabled sshd service on startup
+      ansible.builtin.service:
+        name: sshd
+        enabled: true
+        state: started
+
     - name: Install frequent used packages
       ansible.builtin.dnf:
         name:
