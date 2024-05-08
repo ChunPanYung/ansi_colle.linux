@@ -21,7 +21,7 @@ pipeline {
             steps {
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
-                        inventory: 'ANSIBLE_INVENTORY_FILE',
+                        inventory: '${ANSIBLE_INVENTORY_FILE}',
                         playbook: 'playbooks/install.yml',
                         colorized: true,
                     )
