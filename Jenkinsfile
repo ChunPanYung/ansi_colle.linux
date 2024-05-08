@@ -15,16 +15,11 @@ pipeline {
     stages {
         stage('Ansible') {
             steps {
-                sh """
-                sha256sum ${env.ANSIBLE_INVENTORY_FILE}
-                """
                 ansiColor('xterm') {
-                    ansibleAdhoc(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
-                        colorized: true,
+                    ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         inventory: "${ANSIBLE_INVENTORY_FILE}",
-                        tags: 'fedora',
-                        hosts: 'linux',
-                        module: 'setup'
+                        playbook: 'playbooks/install.yml',
+                        colorized: true,
                     )
                 }
             }
