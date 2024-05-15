@@ -10,7 +10,7 @@ pipeline {
     }
     parameters {
         choice(name: 'PLAYBOOK', choices: ['install.yml', 'linux.yml'])
-        string(name: 'TAGS', description: 'Ansible tags')
+        string(name: 'ANSIBLE_RUN_TAGS', description: 'Ansible tags')
         choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 10, 20, 30],
             description: 'Set verbose level on ansible output.'
         )
@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage('Ansible') {
             environment {
-                ANSIBLE_TAGS = "${params.TAGS}"
+                ANSIBLE_RUN_TAGS = "${params.ANSIBLE_RUN_TAGS}"
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
             steps {
@@ -27,9 +27,7 @@ pipeline {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         inventory: '${ANSIBLE_INVENTORY_FILE}',
                         playbook: 'playbooks/install.yml',
-                        tags: "${env.ANSIBLE_TAGS}",
                         colorized: true,
-                        // extras: "${env.ANSIBLE_VERBOSITY}"
                     )
                 }
             }
