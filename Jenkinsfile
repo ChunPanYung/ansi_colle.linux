@@ -20,7 +20,7 @@ pipeline {
         stage('Ansible') {
             environment {
                 ANSIBLE_TAGS = "${params.TAGS}"
-                // ANSIBLE_VERBOSITY = "${params.VERBOSITY}"
+                ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
             steps {
                 ansiColor('xterm') {
