@@ -12,7 +12,9 @@ pipeline {
         ANSIBLE_STDOUT_CALLBACK = "yaml"
     }
     parameters {
-        choice(name: 'PLAYBOOK', choices: ['install.yml', 'linux.yml'])
+        choice(name: 'PLAYBOOK', choices: ['ansi_colle.linux.linux',
+            'ansi_colle.linux.wsl'
+        ])
         string(name: 'ANSIBLE_RUN_TAGS', description: 'Ansible tags')
         choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 10, 20, 30],
             description: 'Set verbose level on ansible output.'
@@ -20,7 +22,19 @@ pipeline {
     }
 
     stages {
-        stage('Ansible') {
+        stage('Install Ansible Collections') {
+            steps {
+                ansiColor('xterm') {
+                    ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
+                        colorized: true,
+                        inventory: '${ANSIBLE_INVENTORY_FILE}',
+                        playbook: 'playbooks/install.yml',
+                    )
+                }
+            }
+        }  // End stage('Install Ansible Collections')
+
+        stage('Execute Ansible Collections') {
             environment {
                 // Setup Ansible Environment Variable
                 ANSIBLE_RUN_TAGS = "${params.ANSIBLE_RUN_TAGS}"
@@ -29,14 +43,13 @@ pipeline {
             steps {
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
-                        inventory: '${ANSIBLE_INVENTORY_FILE}',
-                        playbook: 'playbooks/install.yml',
                         colorized: true,
+                        inventory: '${ANSIBLE_INVENTORY_FILE}',
+                        playbook: "${params.PLAYBOOK}"
                     )
                 }
             }
-        }  // End stage('Ansible')
-
+        } // End stage('Execute Ansible Collections')
     }  // End stages
     post {
         always {
