@@ -29,8 +29,7 @@ pipeline {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
                         inventory: '${ANSIBLE_INVENTORY_FILE}',
-                        playbook: 'playbooks/install.yml',
-                        tags: ''
+                        playbook: 'playbooks/install.yml'
                     )
                 }
             }
