@@ -31,7 +31,7 @@ pipeline {
                         playbook: 'playbooks/install.yml',
                         tags: "${env.ANSIBLE_TAGS}",
                         colorized: true,
-                        extras: "${env.ANSIBLE_VERBOSITY}"
+                        // extras: "${env.ANSIBLE_VERBOSITY}"
                     )
                 }
             }
