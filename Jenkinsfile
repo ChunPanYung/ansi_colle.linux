@@ -11,7 +11,7 @@ pipeline {
     parameters {
         choice(name: 'PLAYBOOK', choices: ['install.yml', 'linux.yml'])
         string(name: 'TAGS', description: 'Ansible tags')
-        choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 1, 2, 3],
+        choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 10, 20, 30],
             description: 'Set verbose level on ansible output.'
         )
     }
