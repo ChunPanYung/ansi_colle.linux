@@ -7,6 +7,9 @@ pipeline {
     environment {
         ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY')
         ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
+
+        ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
+        ANSIBLE_STDOUT_CALLBACK = "yaml"
     }
     parameters {
         choice(name: 'PLAYBOOK', choices: ['install.yml', 'linux.yml'])
@@ -20,8 +23,6 @@ pipeline {
         stage('Ansible') {
             environment {
                 // Setup Ansible Environment Variable
-                ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
-                ANSIBLE_STDOUT_CALLBACK = "yaml"
                 ANSIBLE_RUN_TAGS = "${params.ANSIBLE_RUN_TAGS}"
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
