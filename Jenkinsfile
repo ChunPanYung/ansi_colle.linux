@@ -19,6 +19,9 @@ pipeline {
     stages {
         stage('Ansible') {
             environment {
+                // Setup Ansible Environment Variable
+                ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
+                ANSIBLE_STDOUT_CALLBACK = "yaml"
                 ANSIBLE_RUN_TAGS = "${params.ANSIBLE_RUN_TAGS}"
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
