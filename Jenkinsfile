@@ -1,16 +1,5 @@
 pipeline {
     agent { label 'python' }
-    // parameters {}
-    options {
-        timeout(time: 1, unit: 'HOURS')
-    }
-    environment {
-        ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY')
-        ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
-
-        ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
-        ANSIBLE_STDOUT_CALLBACK = "yaml"
-    }
     parameters {
         choice(name: 'PLAYBOOK', choices: ['ansi_colle.linux.linux',
             'ansi_colle.linux.wsl', 'ansi_colle.mods.ping'
@@ -21,6 +10,18 @@ pipeline {
         )
     }
 
+    options {
+        timeout(time: 1, unit: 'HOURS')
+    }
+
+    environment {
+        ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY')
+        ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
+
+        ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
+        ANSIBLE_STDOUT_CALLBACK = "yaml"
+    }
+
     stages {
         stage('Install Ansible Collections') {
             steps {
@@ -29,6 +30,7 @@ pipeline {
                         colorized: true,
                         inventory: '${ANSIBLE_INVENTORY_FILE}',
                         playbook: 'playbooks/install.yml',
+                        tags: ''
                     )
                 }
             }
