@@ -15,7 +15,7 @@ pipeline {
     }
 
     environment {
-        ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY')
+        ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY_FILE')
         ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
 
         ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
@@ -42,7 +42,6 @@ pipeline {
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
             steps {
-                input 'Proceed or Abort'
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
