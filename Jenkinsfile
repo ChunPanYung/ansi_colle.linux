@@ -42,7 +42,7 @@ pipeline {
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
             steps {
-                sh 'cat ${env.ANSIBLE_SSH_PRIVATE_KEY}'
+                input 'Proceed or Abort'
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
