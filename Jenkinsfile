@@ -20,6 +20,7 @@ pipeline {
 
         ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
         ANSIBLE_STDOUT_CALLBACK = "yaml"
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
     }
 
     stages {
