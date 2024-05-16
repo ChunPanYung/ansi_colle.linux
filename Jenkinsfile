@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 // sh 'cp ${env.ANSIBLE_SSH_PRIVATE_KEY} /tmp/donut.key'
-                echo hello
+                sh 'echo hello world!'
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
