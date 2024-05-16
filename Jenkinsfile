@@ -42,7 +42,7 @@ pipeline {
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
             steps {
-                sh 'cp ${env.ANSIBLE_SSH_PRIVATE_KEY} /tmp/donut.key'
+                sh 'cat ${env.ANSIBLE_SSH_PRIVATE_KEY}'
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
