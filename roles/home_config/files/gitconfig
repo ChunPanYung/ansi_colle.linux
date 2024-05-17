@@ -14,3 +14,5 @@
 	rebase = true
 [color]
 	ui = true
+[tag]
+	gpgSign = true
