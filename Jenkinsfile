@@ -30,7 +30,10 @@ pipeline {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
                         inventoryContent: 'localhost ansible_connection=local',
-                        playbook: 'playbooks/install.yml'
+                        playbook: 'playbooks/install.yml',
+                        extraVars: [
+                            git_branch: "${env.BRANCH_NAME}"
+                        ]
                     )
                 }
             }
