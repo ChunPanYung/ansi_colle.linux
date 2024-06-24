@@ -15,7 +15,6 @@ pipeline {
     }
 
     environment {
-        ANSIBLE_INVENTORY_FILE = credentials('LINUX_INVENTORY_FILE')
         ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
 
         ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
@@ -44,6 +43,7 @@ pipeline {
 
         stage('Execute Ansible Collections') {
             environment {
+                ANSIBLE_INVENTORY_FILE = credentials('LINUX_INVENTORY_FILE')
                 // Setup Ansible Environment Variable
                 ANSIBLE_RUN_TAGS = "${params.ANSIBLE_RUN_TAGS}"
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
