@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Bug Fixes
+
+- Safe injection, specify which credential to use.
+
+### Features
+
+- Options, parameters, and playbook plugins.
+- Local installation of ansible playbook.
+- Configure ansible with environment variables.
+- [**breaking**] Use ansiblePlaybook isntead of adhoc.
+- Git tag must be signed.
+- Do not allow pushing if defaul branch is main or master.
+
 ## [1.3.0] - 2024-05-03
 
 ### Features
