@@ -7,6 +7,15 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - Safe injection, specify which credential to use.
+- Ping playbook from different collection.
+- Specify branch to install.
+
+### Refactor
+
+- Run on all hosts by default, use inventory for filtering.
+- Default to ping choice parameter.
+- Change variable name.
+- Setting environment variable to local stage scope.
 
 ### Features
 
