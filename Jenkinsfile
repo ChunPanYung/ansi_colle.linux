@@ -1,8 +1,8 @@
 pipeline {
     agent { label 'python' }
     parameters {
-        choice(name: 'PLAYBOOK', choices: ['ansi_colle.linux.linux',
-            'ansi_colle.linux.wsl', 'ansi_colle.mods.ping'
+        choice(name: 'PLAYBOOK', choices: ['ansi_colle.linux.ping',
+            'ansi_colle.linux.wsl', 'ansi_colle.mods.linux'
         ])
         string(name: 'ANSIBLE_RUN_TAGS', description: 'Ansible tags')
         choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 10, 20, 30],
