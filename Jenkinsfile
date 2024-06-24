@@ -29,7 +29,7 @@ pipeline {
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
-                        inventory: 'localhost ansible_connection=local',
+                        inventoryContent: 'localhost ansible_connection=local',
                         playbook: 'playbooks/install.yml'
                     )
                 }
