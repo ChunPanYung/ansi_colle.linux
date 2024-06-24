@@ -15,7 +15,7 @@ pipeline {
     }
 
     environment {
-        ANSIBLE_INVENTORY_FILE = credentials('ANSIBLE_INVENTORY_FILE')
+        ANSIBLE_INVENTORY_FILE = credentials('LINUX_INVENTORY_FILE')
         ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
 
         ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
