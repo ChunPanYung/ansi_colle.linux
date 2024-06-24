@@ -1,6 +1,6 @@
 ---
 - name: Execute on localhost
-  hosts: linux
+  hosts: all
   vars_prompt:
     - name: ansible_become_password
       prompt: "BECOME password"
