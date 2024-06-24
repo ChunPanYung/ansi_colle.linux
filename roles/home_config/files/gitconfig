@@ -1,3 +1,7 @@
+[branch "master"]
+	pushRemote = no_push
+[branch "main"]
+	pushRemote = no_push
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -14,3 +18,5 @@
 	rebase = true
 [color]
 	ui = true
+[tag]
+	gpgSign = true

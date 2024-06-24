@@ -2,7 +2,7 @@
 - name: Execute on localhost
   hosts: linux
   vars_prompt:
-    - name: ansible_become_pass
+    - name: ansible_become_password
       prompt: "BECOME password"
 
   roles:
