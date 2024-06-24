@@ -32,7 +32,10 @@ pipeline {
                         inventoryContent: 'localhost ansible_connection=local',
                         playbook: 'playbooks/install.yml',
                         extraVars: [
-                            git_branch: "${env.BRANCH_NAME}"
+                            git_branch: [
+                                value: "${env.BRANCH_NAME}",
+                                hidden: false
+                            ]
                         ]
                     )
                 }
