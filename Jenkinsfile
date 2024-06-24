@@ -1,8 +1,8 @@
 pipeline {
     agent { label 'python' }
     parameters {
-        choice(name: 'PLAYBOOK', choices: ['ansi_colle.linux.linux',
-            'ansi_colle.linux.wsl', 'ansi_colle.mods.ping'
+        choice(name: 'PLAYBOOK', choices: ['ansi_colle.mods.ping',
+            'ansi_colle.linux.wsl', 'ansi_colle.linux.linux'
         ])
         string(name: 'ANSIBLE_RUN_TAGS', description: 'Ansible tags')
         choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 10, 20, 30],
@@ -15,7 +15,6 @@ pipeline {
     }
 
     environment {
-        ANSIBLE_INVENTORY_FILE = credentials('LINUX_INVENTORY_FILE')
         ANSIBLE_SSH_PRIVATE_KEY = credentials('ANSIBLE_SSH_PRIVATE_KEY')
 
         ANSIBLE_LOAD_CALLBACK_PLUGINS = "True"
@@ -29,8 +28,14 @@ pipeline {
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
-                        inventory: 'localhost ansible_connection=local',
-                        playbook: 'playbooks/install.yml'
+                        inventoryContent: 'localhost ansible_connection=local',
+                        playbook: 'playbooks/install.yml',
+                        extraVars: [
+                            git_branch: [
+                                value: "${env.BRANCH_NAME}",
+                                hidden: false
+                            ]
+                        ]
                     )
                 }
             }
@@ -38,6 +43,7 @@ pipeline {
 
         stage('Execute Ansible Collections') {
             environment {
+                ANSIBLE_INVENTORY_FILE = credentials('LINUX_INVENTORY_FILE')
                 // Setup Ansible Environment Variable
                 ANSIBLE_RUN_TAGS = "${params.ANSIBLE_RUN_TAGS}"
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
