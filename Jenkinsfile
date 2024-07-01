@@ -44,6 +44,7 @@ pipeline {
         stage('Execute Ansible Collections') {
             environment {
                 ANSIBLE_INVENTORY_FILE = credentials('LINUX_INVENTORY_FILE')
+                ANSIBLE_BECOME_PASS_FILE = credentials('ANSIBLE_BECOME_PASS_FILE')
                 // Setup Ansible Environment Variable
                 ANSIBLE_RUN_TAGS = "${params.ANSIBLE_RUN_TAGS}"
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
@@ -53,7 +54,8 @@ pipeline {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
                         inventory: '${ANSIBLE_INVENTORY_FILE}',
-                        playbook: "${params.PLAYBOOK}"
+                        playbook: "${params.PLAYBOOK}",
+                        extras: '--become-password-file ${ANSIBLE_BECOME_PASS_FILE}'
                     )
                 }
             }
