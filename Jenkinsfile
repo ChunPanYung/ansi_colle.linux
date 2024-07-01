@@ -55,7 +55,7 @@ pipeline {
                         colorized: true,
                         inventory: '${ANSIBLE_INVENTORY_FILE}',
                         playbook: "${params.PLAYBOOK}",
-                        extras: '--become-password-file ${ANSIBLE_BECOME_PASS_FILE}'
+                        extras: '--become-password-file ${env.ANSIBLE_BECOME_PASS_FILE}'
                     )
                 }
             }
