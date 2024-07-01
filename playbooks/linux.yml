@@ -1,9 +1,9 @@
 ---
 - name: Execute on localhost
   hosts: all
-  vars_prompt:
-    - name: ansible_become_password
-      prompt: "BECOME password"
+  # vars_prompt:
+  #   - name: ansible_become_password
+  #     prompt: "BECOME password"
 
   roles:
     - role: ansi_colle.slim_os.fedora
