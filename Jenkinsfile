@@ -5,7 +5,7 @@ pipeline {
             'ansi_colle.linux.wsl', 'ansi_colle.linux.linux'
         ])
         string(name: 'ANSIBLE_RUN_TAGS', description: 'Ansible tags')
-        choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 1, 10, 20, 30],
+        choice(name: 'ANSIBLE_VERBOSITY', choices: [0, 1, 2, 3],
             description: 'Set verbose level on ansible output.'
         )
     }
