@@ -56,8 +56,7 @@ pipeline {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
                         inventory: '${ANSIBLE_INVENTORY_FILE}',
-                        playbook: "${params.PLAYBOOK}",
-                        extras: '--become-password-file $ANSIBLE_BECOME_PASSWORD_FILE'
+                        playbook: "${params.PLAYBOOK}"
                     )
                 }
             }
