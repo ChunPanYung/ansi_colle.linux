@@ -51,7 +51,7 @@ pipeline {
                 ANSIBLE_VERBOSITY = "${params.ANSIBLE_VERBOSITY}"
             }
             steps {
-                sh 'cat $ANSIBLE_BECOME_PASSWORD_FILE'
+                sh 'cat $ANSIBLE_INVENTORY_FILE'
                 ansiColor('xterm') {
                     ansiblePlaybook(credentialsId: 'ANSIBLE_SSH_PRIVATE_KEY',
                         colorized: true,
