@@ -40,3 +40,5 @@
       tags: golang
     - role: ansi_colle.linux.ergo
       tags: ergo
+    - role: ansi_colle.linux.arkade
+      tags: arkade
