@@ -5,8 +5,19 @@
     state: directory
   register: arkade_temp
 
-- name: Download Arkade file
+- name: Download Arkade install file to localhost
+  delegate_to: localhost
   ansible.builtin.get_url:
     url: https://get.arkade.dev
-    dest: "{{ arkade_temp.path }}"
+    dest: "{{ arkade_temp.path }}/get.sh"
     mode: '0544'
+
+- name: Install Arkade
+  become: true
+  ansible.builtin.script: "{{ arkade_temp.path }}/get.sh"
+  register: arkade_output
+
+- name: Check output of installation script
+  ansible.builtin.debug:
+    var: arkade_output
+    verbosity: 1
