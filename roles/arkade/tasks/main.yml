@@ -1,0 +1,12 @@
+---
+# tasks file for arkade
+- name: Create temp directory
+  ansible.builtin.tempfile:
+    state: directory
+  register: arkade_temp
+
+- name: Download Arkade file
+  ansible.builtin.get_url:
+    url: https://get.arkade.dev
+    dest: "{{ arkade_temp.path }}"
+    mode: '0544'
