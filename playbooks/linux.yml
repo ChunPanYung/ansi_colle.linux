@@ -1,5 +1,5 @@
 ---
-- name: Execute on localhost
+- name: Execute on Linux
   hosts: all
   vars_prompt:
     - name: ansible_become_password
