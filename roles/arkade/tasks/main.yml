@@ -11,10 +11,10 @@
     command_name: arkade
     arg: version
     desired_version: "{{ arkade_api.json.tag_name[1:] }}"
-  register: pwsh_cmp
+  register: arkade_cmp
 
 - name: Execute the following if version is not the latest
-  when: (pwsh_cmp.rc == 2) or (pwsh_cmp.rc ==1)
+  when: (arkade_cmp.rc == 2) or (arkade_cmp.rc ==1)
   block:
     - name: Ensure directory exists
       ansible.builtin.file:
