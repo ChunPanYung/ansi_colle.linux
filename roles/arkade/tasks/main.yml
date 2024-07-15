@@ -18,7 +18,7 @@
   ansi_colle.mods.cmp_pkg:
     name: arkade
     version_arg: version
-    desired_version: "{{ arkade_api.json.tag_name[1:] }}"
+    desired_version: "{{ arkade_api.json.tag_name }}"
     # desired_version: '3.0.0'
 
 - name: Execute the following if version is not the latest
