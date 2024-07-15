@@ -1,23 +1,29 @@
 ---
 # tasks file for arkade
-- name: Create temp directory
-  ansible.builtin.tempfile:
-    state: directory
-  register: arkade_temp
+- name: Retrieve information from github api
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/alexellis/arkade/releases/latest"
+    return_content: true
+  register: arkade_api
 
-- name: Download Arkade install file to localhost
-  delegate_to: localhost
-  ansible.builtin.get_url:
-    url: https://get.arkade.dev
-    dest: "{{ arkade_temp.path }}/get.sh"
-    mode: '0544'
+- name: Compare to current arkade version if it exists
+  ansi_colle.mods.cmp_pkg:
+    command_name: arkade
+    arg: version
+    desired_version: "{{ powershell_api.json.tag_name[1:] }}"
+  register: pwsh_cmp
 
-- name: Install Arkade
-  become: true
-  ansible.builtin.script: "{{ arkade_temp.path }}/get.sh"
-  register: arkade_output
+- name: Execute the following if version is not the latest
+  when: (pwsh_cmp.rc == 2) or (pwsh_cmp.rc ==1)
+  block:
+    - name: Ensure directory exists
+      ansible.builtin.file:
+        path: /usr/local/bin/
+        state: directory
+        mode: '0755'
 
-- name: Check output of installation script
-  ansible.builtin.debug:
-    var: arkade_output
-    verbosity: 1
+    - name: Download executables for linux x64 system
+      ansible.builtin.get_url:
+        url: "{{ powershell_api.json.assets[0].browser_download_url }}"
+        dest: "/usr/local/bin/"
+        mode: '0755'
