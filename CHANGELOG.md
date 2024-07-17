@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Features
+
+- Install lua and luarocks.
+
 ## [1.4.0] - 2024-07-16
 
 ### Bug Fixes
