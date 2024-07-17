@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.4.0] - 2024-07-16
 
 ### Bug Fixes
 
+- Variable name.
 - Safe injection, specify which credential to use.
 - Ping playbook from different collection.
 - Specify branch to install.
@@ -24,7 +25,9 @@ All notable changes to this project will be documented in this file.
 - Configure ansible with environment variables.
 - [**breaking**] Use ansiblePlaybook isntead of adhoc.
 - Git tag must be signed.
-- Do not allow pushing if defaul branch is main or master.
+- Do not allow pushing if default branch is main or master.
+- Install and check output based on verbosity.
+- New role to install and download arkade.
 
 ## [1.3.0] - 2024-05-03
 
