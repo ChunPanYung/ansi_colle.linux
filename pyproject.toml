@@ -9,15 +9,17 @@ dependencies = [
     "ansible>=9.2.0",
     "tomli-w>=1.0.0",
 ]
-requires-python = ">=3.11"
+requires-python = "==3.12.*"
 readme = "README.md"
 license = {text = "MIT"}
+version = "1.4.0"
 
 [tool.pdm]
 distribution = false
 
 [tool.pdm.scripts]
-install = "ansible-playbooks ansi_colle.linux.install"
+install = "ansible-playbook ansi_colle.linux.install"
+run = "ansible-playbook ansi_colle.linux.linux --ask-become-pass"
 changelog = "git-cliff --prepend CHANGELOG.md --unreleased --tag"
 
 [tool.pdm.version]
