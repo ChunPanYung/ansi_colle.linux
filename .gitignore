@@ -13,6 +13,7 @@ hosts.yml
 .plugin-cache.yaml
 
 # python
+__init__.py
 __pycache__
 .venv
 .pytest_cache
