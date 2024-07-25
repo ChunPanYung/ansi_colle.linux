@@ -7,6 +7,7 @@
         name:
           - tmux
           - git
+          - git-lfs
 
     - name: Install development tools used by all project
       ansible.builtin.dnf:
