@@ -27,3 +27,21 @@
         url: "{{ arkade_api.json.assets[0].browser_download_url }}"
         dest: "/usr/local/bin/"
         mode: '0755'
+
+- name: Ensure directory for arkade exist
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.arkade/bin/"
+    state: directory
+    mode: '0750'
+
+- name: Setup PATH for arkade
+  when: ansible_os_family == 'RedHat'
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    insertbefore: "^export PATH"
+    marker: "# {mark} SETUP ARKADE PATH"
+    block: |
+      if ! [[ "$PATH" =~ $HOME/.arkade/bin ]]
+      then
+        PATH="$HOME/.arkade/bin:$PATH"
+      fi

@@ -2,10 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.4.1] - 2024-07-25
+
+### Documentation
+
+- Update version, add new script.
+- Use different alias for executing playbook.
 
 ### Features
 
+- Install lua and luarocks. (#27)
+- Add arkade bin directory to PATH.
+- [**breaking**] Get version from scm.
+- Install git-lfs
 - Install lua and luarocks.
 
 ## [1.4.0] - 2024-07-16
