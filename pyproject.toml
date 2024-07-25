@@ -1,6 +1,6 @@
 [project]
 name = "ansi_colle-linux"
-dynamic = ["version"]
+dynamic = ["version"]  # Check galaxy.yml for version
 description = "Default template for PDM package"
 authors = [
     {name = "Chun Pan Yung", email = "31672021+ChunPanYung@users.noreply.github.com"},
@@ -14,15 +14,13 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [tool.pdm]
-version = { source = "file", path = "__init__.py" }
 distribution = false
 
 [tool.pdm.scripts]
 install = "ansible-playbook ansi_colle.linux.install"
-run = "ansible-playbook ansi_colle.linux.linux --ask-become-pass"
+run = "ansible-playbook ansi_colle.linux.linux --ask-become-pass --inventory"
 changelog = "git-cliff --prepend CHANGELOG.md --unreleased --tag"
 
 [tool.pdm.version]
-source = "call"
-getter = "py.util.get_version('galaxy.yml')"
+source = "scm"
 
