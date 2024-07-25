@@ -18,7 +18,7 @@ distribution = false
 
 [tool.pdm.scripts]
 install = "ansible-playbook ansi_colle.linux.install"
-run = "ansible-playbook ansi_colle.linux.linux --ask-become-pass --inventory"
+exec = "ansible-playbook ansi_colle.linux.linux --ask-become-pass --inventory"
 changelog = "git-cliff --prepend CHANGELOG.md --unreleased --tag"
 
 [tool.pdm.version]
