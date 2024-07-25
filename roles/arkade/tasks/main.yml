@@ -30,7 +30,7 @@
 
 - name: Ensure directory for arkade exist
   ansible.builtin.file:
-    path: "{{ ansible_usr_dir }}/.arkade/bin/"
+    path: "{{ ansible_user_dir }}/.arkade/bin/"
     state: directory
     mode: '0750'
 
