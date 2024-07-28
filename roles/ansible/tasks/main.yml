@@ -24,5 +24,4 @@
   loop:
     - {key: 'stdout_callback', value: 'yaml'}
     - {key: 'bin_ansible_callbacks ', value: 'True'}
-    - {key: 'inventory', value: '~/.keys/hosts.cfg'}
     - {key: 'verbosity', value: '1'}
