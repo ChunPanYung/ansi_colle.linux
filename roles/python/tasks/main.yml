@@ -1,27 +1,35 @@
 ---
-# tasks file for pipx
-- name: Install python and related packages
+# tasks file for python
+- name: Install following with sudo
   become: true
-  ansible.builtin.package:
-    name:
-      - python3-pip
-      - pipx
-      - python3-ipython
+  block:
+    - name: Install python and related packages
+      ansible.builtin.package:
+        name:
+          - gcc
+          - python3-pip
+          - pipx
+          - python3-ipython
+          - black
+          - pre-commit
 
-- name: Create venv directory for pip virtual environment
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.venv/"
-    mode: '0755'
-    state: directory
+    - name: Install following if it is RedHat based OS
+      when: ansible_os_family == 'RedHat'
+      ansible.builtin.dnf:
+        name:
+          - python3-devel
+
+    - name: Install following if it is Debian based OS
+      when: ansible_os_family == 'Debian'
+      ansible.builtin.apt:
+        name:
+          - python3-dev
 
 - name: Install developmental tools
-  become: false
   community.general.pipx:
     name: "{{ item }}"
   loop:
     - git-cliff
-    - ruff-lsp
-    - black
+    - ruff
     - pytest
-    - pre-commit
     - pdm
