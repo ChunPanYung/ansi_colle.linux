@@ -12,6 +12,7 @@
           - python3-ipython
           - black
           - pre-commit
+          - python3-pytest
 
     - name: Install following if it is RedHat based OS
       when: ansible_os_family == 'RedHat'
@@ -31,5 +32,4 @@
   loop:
     - git-cliff
     - ruff
-    - pytest
     - pdm
