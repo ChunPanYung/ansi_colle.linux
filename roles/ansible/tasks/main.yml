@@ -12,11 +12,7 @@
 
 - name: Install ansible tools
   community.general.pipx:
-    name: "{{ item }}"
-  loop:
-    - molecule
-    - ansible-lint
-    - yamllint
+    name: ansible-dev-tools
 
 - name: Setup ansible configuration
   community.general.ini_file:
