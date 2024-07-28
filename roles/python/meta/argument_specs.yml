@@ -1,0 +1,10 @@
+---
+argument_specs:
+  main:
+    short_description: Main entry point for the python role
+    description:
+      - Main entry point for the python role.
+      - Install and setup python.
+    author:
+      - Chun Pan Yung
+    options: {}
