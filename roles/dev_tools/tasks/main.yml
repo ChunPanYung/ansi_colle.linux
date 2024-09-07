@@ -10,6 +10,11 @@
       - git
       - git-lfs
 
+- name: Install container development environment
+  become: true
+  ansible.builtin.package:
+    name: distrobox
+
 - name: Install shell script tools
   become: true
   ansible.builtin.package:
