@@ -6,6 +6,9 @@
     name:
       - fd-find
       - ripgrep
+      - tmux
+      - git
+      - git-lfs
 
 - name: Install shell script tools
   become: true
