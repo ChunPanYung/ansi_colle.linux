@@ -2,6 +2,9 @@
 argument_specs:
   main:
     short_description: Main entry point for dev_tools role.
+    description:
+      - Install list of development tools.
+      - Currently only support fedora(dnf) and debian(apt) package manager.
     author:
       - Chun Pan Yung
     options:
