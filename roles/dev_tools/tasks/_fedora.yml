@@ -11,10 +11,6 @@
           - lua
           - luarocks
 
-    - name: Install VirtualBox
-      ansible.builtin.dnf:
-        name: VirtualBox
-
 - name: Install packages from repository
   become: true
   block:
