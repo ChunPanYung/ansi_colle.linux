@@ -16,6 +16,7 @@
         type: collection
         name: "{{ item }}"
       loop:
+        - git+https://github.com/ChunPanYung/ansi_colle-mods.git,main
         - git+https://github.com/ChunPanYung/ansi_colle-slim_os.git,main
         - git+https://github.com/ChunPanYung/ansi_colle-server.git,main
 
@@ -24,4 +25,4 @@
         this_collection: git+https://github.com/ChunPanYung/ansi_colle-linux.git
       community.general.ansible_galaxy_install:
         type: collection
-        name: "{{ this_collection }},{{ git_version | default('main') }}"
+        name: "{{ this_collection }},{{ git_branch | default('main') }}"

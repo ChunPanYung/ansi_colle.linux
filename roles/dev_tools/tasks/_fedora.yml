@@ -7,18 +7,21 @@
         name:
           - tmux
           - git
+          - git-lfs
 
     - name: Install development tools used by all project
       ansible.builtin.dnf:
         name:
           - poetry
 
-    - name: Install Neovim
+    - name: Install Neovim and dependencies
       ansible.builtin.dnf:
         name:
           - neovim
           - python3-neovim
           - gcc-c++  # Required by nvim-treesitter
+          - lua
+          - luarocks
 
     - name: Install VirtualBox
       ansible.builtin.dnf:

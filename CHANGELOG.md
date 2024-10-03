@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2024-07-25
+
+### Documentation
+
+- Update version, add new script.
+- Use different alias for executing playbook.
+
+### Features
+
+- Install lua and luarocks. (#27)
+- Add arkade bin directory to PATH.
+- [**breaking**] Get version from scm.
+- Install git-lfs
+- Install lua and luarocks.
+
+## [1.4.0] - 2024-07-16
+
+### Bug Fixes
+
+- Variable name.
+- Safe injection, specify which credential to use.
+- Ping playbook from different collection.
+- Specify branch to install.
+
+### Refactor
+
+- Run on all hosts by default, use inventory for filtering.
+- Default to ping choice parameter.
+- Change variable name.
+- Setting environment variable to local stage scope.
+
+### Features
+
+- Options, parameters, and playbook plugins.
+- Local installation of ansible playbook.
+- Configure ansible with environment variables.
+- [**breaking**] Use ansiblePlaybook isntead of adhoc.
+- Git tag must be signed.
+- Do not allow pushing if default branch is main or master.
+- Install and check output based on verbosity.
+- New role to install and download arkade.
+
+## [1.3.0] - 2024-05-03
+
+### Features
+
+- Jenkinsfile to test ansible connection.
+- Enable and start sshd service.
+
+## [1.2.0] - 2024-04-25
+
+### Features
+
+- Initial role to setup and configure ergo.
+- Add ergo role to playbook.
+- [**breaking**] Remove deprecated role.
+
 ## [1.1.2] - 2024-03-22
 
 ### Features

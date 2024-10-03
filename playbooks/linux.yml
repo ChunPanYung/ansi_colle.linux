@@ -1,9 +1,9 @@
 ---
 - name: Execute on localhost
-  hosts: linux
-  vars_prompt:
-    - name: ansible_become_pass
-      prompt: "BECOME password"
+  hosts: all
+  # vars_prompt:
+  #   - name: ansible_become_password
+  #     prompt: "BECOME password"
 
   roles:
     - role: ansi_colle.slim_os.fedora
@@ -28,8 +28,6 @@
       tags: kopia
     - role: ansi_colle.linux.sys_config
       tags: sys_config
-    - role: ansi_colle.server.podman
-      tags: podman
     - role: ansi_colle.server.onlyoffice
       tags: onlyoffice
     - role: ansi_colle.linux.powershell
@@ -40,3 +38,7 @@
       tags: kuro
     - role: ansi_colle.linux.golang
       tags: golang
+    - role: ansi_colle.linux.ergo
+      tags: ergo
+    - role: ansi_colle.linux.arkade
+      tags: arkade
