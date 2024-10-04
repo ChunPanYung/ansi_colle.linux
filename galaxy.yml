@@ -2,7 +2,7 @@
 ### REQUIRED
 namespace: ansi_colle
 name: linux
-version: 1.4.1
+version: 1.4.2
 readme: README.md
 authors:
   - Chun Pan Yung <31672021+ChunPanYung@users.noreply.github.com>
