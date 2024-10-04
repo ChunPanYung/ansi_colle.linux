@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.2] - 2024-10-04
+
+### Features
+
+- Additional attribute and reorder gitconfig file.
+
 ## [1.4.1] - 2024-07-25
 
 ### Documentation
