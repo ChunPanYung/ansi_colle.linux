@@ -29,6 +29,8 @@
       - net.sourceforge.mcomix
       - com.microsoft.Edge
       - com.jgraph.drawio.desktop
+      - com.yubico.yubioath
+      - io.podman_desktop.PodmanDesktop
 
 - name: Install different firefox package
   block:
