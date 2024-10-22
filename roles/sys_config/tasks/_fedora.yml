@@ -33,3 +33,4 @@
       ansible.builtin.dnf:
         name:
           - android-file-transfer
+          - jmtpfs
