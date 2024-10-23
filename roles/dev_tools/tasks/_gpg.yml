@@ -15,8 +15,11 @@
 - name: Setup GPG_TTY variable
   ansible.builtin.lineinfile:
     path: "{{ g_home_bashrc }}"
-    regexp: '^export GPG_TTY='
-    line: export GPG_TTY=$(tty)
+    regexp: "{{ item.key }}"
+    line: "{{ item.value }}"
+  loop:
+    - {key: '^GPG_TTY=', value: 'GPG_TTY=$(tty)' }
+    - {key: '^export GPG_TTY', value: 'export GPG_TTY' }
 
 - name: Enable gpg-agent daemon on startup
   ansible.builtin.lineinfile:
