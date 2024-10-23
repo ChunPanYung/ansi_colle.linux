@@ -25,22 +25,21 @@
     line: >
       eval "$(gpg-agent --daemon &> /dev/null)" #Eanble gpg-agent on startup
 
-- name: Create gpg.conf if it does not exist
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
-    mode: '0644'
-    state: touch
-    modification_time: preserve
-    access_time: preserve
-
 - name: Short key id format for gpg
   ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
     regexp: "{{ item.key }}"
     line: "{{ item.value }}"
+    create: true
+    mode: '0644'
   loop:
     - {key: '^# Long hexidecimal key format', value: '# Short key format'}
     - {key: '^keyid-format', value: 'keyid-format short'}
+
+- name: Enable ssh support on gpg-agent
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
+    line: enable-ssh-support
 
 - name: Setup gpg alias equivalent of 'ssh-add'
   ansible.builtin.lineinfile:
