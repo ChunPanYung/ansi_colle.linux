@@ -39,11 +39,6 @@
     - {key: '^# Long hexidecimal key format', value: '# Short key format'}
     - {key: '^keyid-format', value: 'keyid-format short'}
 
-- name: Enable ssh support on gpg-agent
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.gnupg/gpg.conf"
-    line: enable-ssh-support
-
 - name: Setup gpg alias equivalent of 'ssh-add'
   ansible.builtin.lineinfile:
     path: "{{ g_home_aliases }}"
