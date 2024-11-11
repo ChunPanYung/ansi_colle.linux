@@ -1,0 +1,6 @@
+---
+- name: Install collection
+  ansible.builtin.import_playbook: ansi_colle.linux.install
+
+- name: Execute playbook
+  ansible.builtin.import_playbook: ansi_colle.linux.site
