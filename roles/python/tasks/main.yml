@@ -7,6 +7,7 @@
       - python3-pip
       - pipx
       - python3-ipython
+      - pre-commit
 
 - name: Create venv directory for pip virtual environment
   ansible.builtin.file:
@@ -20,8 +21,6 @@
     name: "{{ item }}"
   loop:
     - git-cliff
-    - ruff-lsp
-    - black
+    - ruff
     - pytest
-    - pre-commit
     - pdm
