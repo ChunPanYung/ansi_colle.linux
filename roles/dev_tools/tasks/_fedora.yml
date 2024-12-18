@@ -22,6 +22,7 @@
           - gcc-c++  # Required by nvim-treesitter
           - lua
           - luarocks
+          - fzf
 
     - name: Install VirtualBox
       ansible.builtin.dnf:
